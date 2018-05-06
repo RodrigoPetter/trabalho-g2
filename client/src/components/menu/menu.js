@@ -1,31 +1,25 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 
 class Menu extends Component {
     render() {
-        return (
-            <nav className="navbar navbar-inverse">
-                <div className="container-fluid">
-                    <div className="navbar-header">
-                        <a className="navbar-brand" href="#">WebSiteName</a>
-                    </div>
-                    <ul className="nav navbar-nav">
-                        <li className="active"><a href="#">Home</a></li>
-                        <li className="dropdown">
-                            <a className="dropdown-toggle" data-toggle="dropdown" href="#">Page 1
-                                <span className="caret"></span></a>
-                            <ul className="dropdown-menu">
-                                <li><a href="#">Page 1-1</a></li>
-                                <li><a href="#">Page 1-2</a></li>
-                                <li><a href="#">Page 1-3</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="#">Page 2</a></li>
-                        <li><a href="#">Page 3</a></li>
-                    </ul>
+        return <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a className="navbar-brand" href="#">Dashboard</a>
+            <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div className="navbar-nav">
+                    <a className="nav-item nav-link active" href="#">Concursos</a>
+                    <a className="nav-item nav-link" href="#">Departamentos</a>
+                    <a className="nav-item nav-link" href="#">Cargos</a>
+                    <a className="nav-item nav-link" href="#">Candidatos</a>
                 </div>
-            </nav>
-        );
+            </div>
+        </nav>;
     }
 }
+
+/*<button className="navbar-toggler" type="button" data-toggle="collapse"
+        data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
+        aria-label="Toggle navigation">
+    <span className="navbar-toggler-icon"></span>
+</button>*/
 
 export default Menu;
