@@ -1,57 +1,62 @@
 import React, {Component} from "react";
 import ReactTable from "react-table";
 
+let formURL = "concurso/";
+
+function excluir() {
+    return <button className='btn btn-secondary'>Excluir</button>;
+}
+
 const data = [{
-    name: 'Tanner Linsley',
-    age: 26,
-    friend: {
-        name: 'Jason Maurer',
-        age: 23,
-    }
-},{
-    name: 'Tanner Linsley',
-    age: 26,
-    friend: {
-        name: 'Jason Maurer',
-        age: 23,
-    }
-},{
-    name: 'Tanner Linsley',
-    age: 26,
-    friend: {
-        name: 'Jason Maurer',
-        age: 23,
-    }
-},{
-    name: 'Tanner Linsley',
-    age: 26,
-    friend: {
-        name: 'Jason Maurer',
-        age: 23,
-    }
-},{
-    name: 'Rodrigo',
-    age: 26,
-    friend: {
-        name: 'aaaaaaaa',
-        age: 23,
-    }
+    descricao: 'Concurso 1',
+    data: '2018-05-17',
+    local: 'Porto Alegre',
+    etapas: <a href={'#'}>Inscrições</a>,
+    acoes: excluir()
+}, {
+    descricao: 'Concurso 2',
+    data: '2018-05-17',
+    local: 'Porto Alegre',
+    etapas: <a href={'#'}>Avaliação Médica</a>,
+    acoes: excluir()
+}, {
+    descricao: 'Concurso 3',
+    data: '2018-05-17',
+    local: 'Porto Alegre',
+    etapas: <a href={'#'}>Inscrições</a>,
+    acoes: excluir()
+}, {
+    descricao: 'Concurso 4',
+    data: '2018-05-17',
+    local: 'Porto Alegre',
+    etapas: <a href={'#'}>Inscrições</a>,
+    acoes: excluir()
+}, {
+    descricao: 'Concurso 5',
+    data: '2018-05-17',
+    local: 'Porto Alegre',
+    etapas: <a href={'#'}>Inscrições</a>,
+    acoes: excluir()
 }];
 
 const columns = [{
-    Header: 'Name',
-    accessor: 'name' // String-based value accessors!
+    Header: 'Descrição',
+    accessor: 'descricao' // String-based value accessors!
 }, {
-    Header: 'Age',
-    accessor: 'age',
-    Cell: props => <span className='number'>{props.value}</span> // Custom cell components!
+    Header: 'Data',
+    accessor: 'data'
 }, {
-    id: 'friendName', // Required because our accessor is not a string
-    Header: 'Friend Name',
-    accessor: d => d.friend.name // Custom value accessors!
+    Header: 'Local',
+    accessor: 'local'
 }, {
-    Header: props => <span>Friend Age</span>, // Custom header components!
-    accessor: 'friend.age'
+    Header: 'Etapas',
+    accessor: 'etapas',
+    filterable: false,
+    minWidth: 150
+}, {
+    Header: 'Ações',
+    accessor: 'acoes',
+    filterable: false
 }];
 
 class Concursos extends Component {
@@ -61,7 +66,9 @@ class Concursos extends Component {
                 <h3 className="border-bottom border-gray pb-2 mb-0">Concursos</h3>
                 <div className="row margin15">
                     <div className="col">
-                        <button type="button" className="btn btn-primary btn-sm">Adicionar</button>
+                        <button type="button" className="btn btn-primary btn-sm"
+                                onClick={function(){document.location.href = formURL}}>Novo concurso
+                        </button>
                     </div>
                 </div>
                 <div className="row margin15">

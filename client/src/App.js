@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {BrowserRouter as Router, Route, NavLink} from "react-router-dom";
 
 import Concursos from "./components/concurso/concursos";
+import ConcursoForm from "./components/concurso/concursoForm";
 import Cargos from "./components/cargo/cargos";
 import Dashboard from "./components/dashboard/dashboard";
 import Candidatos from "./components/candidato/candidatos";
@@ -25,6 +26,7 @@ class App extends Component {
                     </nav>
                     <Route exact path="/" component={Dashboard}/>
                     <Route path="/concursos" component={Concursos}/>
+                    <Route path="/concurso" component={ConcursoForm}/>
                     <Route path="/departamentos" component={Departamentos}/>
                     <Route path="/cargos" component={Cargos}/>
                     <Route path="/candidatos" component={Candidatos}/>
