@@ -74,7 +74,7 @@ class Concursos extends Component {
     render() {
         return (
             <div className="container bg-white">
-                <h3 className="border-bottom border-gray pb-2 mb-0">Concursos</h3>
+                <h3 className="border-bottom border-gray pb-2 mb-0">Etapas do concurso</h3>
                 <div className="row margin15">
                     <div className="col">
                         <button type="button" className="btn btn-primary btn-sm"

@@ -6,19 +6,19 @@ class ConcursoForm extends Component {
             <div className="container bg-white">
                 <h2>Inserir Concurso</h2>
                 <form>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Descrição</label>
-                        <input type="te" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                               placeholder="Enter email"/>
+                    <div className="form-group">
+                        <label>Descrição</label>
+                        <input type="text" className="form-control" name="descricao" id="descricao" placeholder="Descrição do concurso" required/>
                     </div>
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">Password</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password"/>
+                    <div className="form-group">
+                        <label>Data</label>
+                        <input type="date" className="form-control" name="data" id="data" placeholder="Data do concurso" required/>
                     </div>
-                    <div class="form-group form-check">
-                        <input type="checkbox" class="form-check-input" id="exampleCheck1"/>
+                    <div className="form-group">
+                        <label>Local</label>
+                        <input type="text" className="form-control" name="local" id="local" placeholder="Local do concurso" required/>
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" className="btn btn-primary">Salvar</button>
                 </form>
             </div>
     );
