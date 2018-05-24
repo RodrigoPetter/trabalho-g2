@@ -1,68 +1,46 @@
 import React, {Component} from "react";
 import ReactTable from "react-table";
 
-let formURL = "concurso/";
+let formURL = "/g2-rodrigo/etapa/";
 
 function actions() {
     return <div>
-        <a href="#" className="badge badge-primary ml-2">Etapas</a>
+        <a href="/g2-rodrigo/candidatos-etapa" className="badge badge-primary ml-2">Candidatos</a>
         <a href="#" className="badge badge-secondary ml-2">Excluir</a>
     </div>
 }
 
 const data = [{
     id: '1',
-    descricao: 'Concurso 1',
-    data: '2018-05-17',
-    local: 'Porto Alegre',
-    etapa: 'Inscrições',
+    descricao: 'Etapa 1',
+    tipo: 'Eliminatória',
     acoes: actions()
 }, {
     id: '2',
-    descricao: 'Concurso 2',
-    data: '2018-05-17',
-    local: 'Porto Alegre',
-    etapa: 'Avaliação Médica',
+    descricao: 'Etapa 2',
+    tipo: 'Etapa',
     acoes: actions()
 }, {
     id: '3',
-    descricao: 'Concurso 3',
-    data: '2018-05-17',
-    local: 'Porto Alegre',
-    etapa: 'Inscrições',
+    descricao: 'Etapa 3',
+    tipo: 'Eliminatória',
     acoes: actions()
 }, {
     id: '4',
-    descricao: 'Concurso 4',
-    data: '2018-05-17',
-    local: 'Porto Alegre',
-    etapa: 'Inscrições',
-    acoes: actions()
-}, {
-    id: '5',
-    descricao: 'Concurso 5',
-    data: '2018-05-17',
-    local: 'Porto Alegre',
-    etapa: 'Inscrições',
+    descricao: 'Etapa 4',
+    tipo: 'Eliminatória',
     acoes: actions()
 }];
 
 const columns = [{
     Header: 'ID',
-    accessor: 'id' // String-based value accessors!
-},{
+    accessor: 'id'
+}, {
     Header: 'Descrição',
-    accessor: 'descricao' // String-based value accessors!
+    accessor: 'descricao'
 }, {
-    Header: 'Data',
-    accessor: 'data'
-}, {
-    Header: 'Local',
-    accessor: 'local'
-}, {
-    Header: 'Etapa atual',
-    accessor: 'etapa',
-    minWidth: 150
+    Header: 'Tipo',
+    accessor: 'tipo'
 }, {
     Header: 'Ações',
     accessor: 'acoes',
@@ -78,7 +56,9 @@ class Concursos extends Component {
                 <div className="row margin15">
                     <div className="col">
                         <button type="button" className="btn btn-primary btn-sm"
-                                onClick={function(){document.location.href = formURL}}>Novo concurso
+                                onClick={function () {
+                                    document.location.href = formURL
+                                }}>Nova etapa
                         </button>
                     </div>
                 </div>

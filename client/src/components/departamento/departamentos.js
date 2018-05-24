@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import ReactTable from "react-table";
+import {getColumnWidth} from "../reacttable/tableUtils";
 
 let formURL = "departamento/";
 
@@ -8,16 +9,6 @@ function actions() {
         <a href="#" className="badge badge-primary ml-2">Cargos</a>
         <a href="#" className="badge badge-secondary ml-2">Excluir</a>
     </div>;
-}
-
-const getColumnWidth = (rows, accessor, headerText) => {
-    const maxWidth = 400;
-    const magicSpacing = 10;
-    const cellLength = Math.max(
-        ...rows.map(row => (`${row[accessor]}` || '').length),
-        headerText.length,
-    )
-    return Math.min(maxWidth, cellLength * magicSpacing)
 }
 
 const data = [{
