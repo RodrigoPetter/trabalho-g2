@@ -48,11 +48,18 @@ const columns = [{
     minWidth: 150
 }];
 
-class Concursos extends Component {
+class Etapas extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            concursoId: props.match.params.id
+        };
+    }
+
     render() {
         return (
             <div className="container bg-white">
-                <h3 className="border-bottom border-gray pb-2 mb-0">Etapas do concurso</h3>
+                <h3 className="border-bottom border-gray pb-2 mb-0">Etapas do concurso {this.state.concursoId}</h3>
                 <div className="row margin15">
                     <div className="col">
                         <button type="button" className="btn btn-primary btn-sm"
@@ -76,4 +83,4 @@ class Concursos extends Component {
     }
 }
 
-export default Concursos;
+export default Etapas;

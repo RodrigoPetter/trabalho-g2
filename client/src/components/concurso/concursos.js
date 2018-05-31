@@ -3,10 +3,9 @@ import ReactTable from "react-table";
 
 let formURL = "/concurso/";
 
-function actions() {
-
+function actions(id) {
     return <div>
-        <a href="/etapas" className="badge badge-primary ml-2">Etapas</a>
+        <a href={"concurso/" + id + "/etapas"} className="badge badge-primary ml-2">Etapas</a>
         <a href="#" className="badge badge-secondary ml-2">Excluir</a>
     </div>
 }
@@ -17,41 +16,41 @@ const data = [{
     data: '2018-05-17',
     local: 'Porto Alegre',
     etapa: 'Inscrições',
-    acoes: actions()
+    acoes: actions(1)
 }, {
     id: '2',
     descricao: 'Concurso 2',
     data: '2018-05-17',
     local: 'Porto Alegre',
     etapa: 'Avaliação Médica',
-    acoes: actions()
+    acoes: actions(1)
 }, {
     id: '3',
     descricao: 'Concurso 3',
     data: '2018-05-17',
     local: 'Porto Alegre',
     etapa: 'Inscrições',
-    acoes: actions()
+    acoes: actions(1)
 }, {
     id: '4',
     descricao: 'Concurso 4',
     data: '2018-05-17',
     local: 'Porto Alegre',
     etapa: 'Inscrições',
-    acoes: actions()
+    acoes: actions(1)
 }, {
     id: '5',
     descricao: 'Concurso 5',
     data: '2018-05-17',
     local: 'Porto Alegre',
     etapa: 'Inscrições',
-    acoes: actions()
+    acoes: actions(1)
 }];
 
 const columns = [{
     Header: 'ID',
     accessor: 'id' // String-based value accessors!
-},{
+}, {
     Header: 'Descrição',
     accessor: 'descricao' // String-based value accessors!
 }, {
@@ -79,7 +78,9 @@ class Concursos extends Component {
                 <div className="row margin15">
                     <div className="col">
                         <button type="button" className="btn btn-primary btn-sm"
-                                onClick={function(){document.location.href = formURL}}>Novo concurso
+                                onClick={function () {
+                                    document.location.href = formURL
+                                }}>Novo concurso
                         </button>
                     </div>
                 </div>

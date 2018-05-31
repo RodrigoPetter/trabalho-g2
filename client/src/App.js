@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {BrowserRouter as Router, Route, Link} from "react-router-dom";
+import {BrowserRouter as Router, Route, NavLink, Switch} from "react-router-dom";
 
 import Concursos from "./components/concurso/concursos";
 import ConcursoForm from "./components/concurso/concursoForm";
@@ -16,24 +16,26 @@ class App extends Component {
             <Router>
                 <div>
                     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-                        <Link className="navbar-brand" to="/">Dashboard</Link>
+                        <NavLink className="navbar-brand" to="/">Dashboard</NavLink>
                         <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                             <div className="navbar-nav">
-                                <Link className="nav-item nav-link" to="/concursos">Concursos</Link>
-                                <Link className="nav-item nav-link" to="/departamentos">Departamentos</Link>
-                                <Link className="nav-item nav-link" to="/cargos">Cargos</Link>
-                                <Link className="nav-item nav-link" to="/candidatos">Candidatos</Link>
+                                <NavLink className="nav-item nav-link" to="/concursos">Concursos</NavLink>
+                                <NavLink className="nav-item nav-link" to="/departamentos">Departamentos</NavLink>
+                                <NavLink className="nav-item nav-link" to="/cargos">Cargos</NavLink>
+                                <NavLink className="nav-item nav-link" to="/candidatos">Candidatos</NavLink>
                             </div>
                         </div>
                     </nav>
-                    <Route exact path="/" component={Dashboard}/>
-                    <Route path="/concursos" component={Concursos}/>
-                    <Route path="/etapas" component={Etapas}/>
-                    <Route path="/candidatos-etapa" component={CandidatosEtapa}/>
-                    <Route path="/concurso" component={ConcursoForm}/>
-                    <Route path="/departamentos" component={Departamentos}/>
-                    <Route path="/cargos" component={Cargos}/>
-                    <Route path="/candidatos" component={Candidatos}/>
+                    <Switch>
+                        <Route exact path="/" component={Dashboard}/>
+                        <Route path="/concursos" component={Concursos}/>
+                        <Route path="/concurso/:id/etapas" component={Etapas}/>
+                        <Route path="/candidatos-etapa" component={CandidatosEtapa}/>
+                        <Route path="/concurso" component={ConcursoForm}/>
+                        <Route path="/departamentos" component={Departamentos}/>
+                        <Route path="/cargos" component={Cargos}/>
+                        <Route path="/candidatos" component={Candidatos}/>
+                    </Switch>
                 </div>
             </Router>
         );
