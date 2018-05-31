@@ -16,24 +16,24 @@ class App extends Component {
             <Router>
                 <div>
                     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-                        <Link className="navbar-brand" to="/g2-rodrigo/">Dashboard</Link>
+                        <Link className="navbar-brand" to="/">Dashboard</Link>
                         <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                             <div className="navbar-nav">
-                                <Link className="nav-item nav-link" to="/g2-rodrigo/concursos">Concursos</Link>
-                                <Link className="nav-item nav-link" to="/g2-rodrigo/departamentos">Departamentos</Link>
-                                <Link className="nav-item nav-link" to="/g2-rodrigo/cargos">Cargos</Link>
-                                <Link className="nav-item nav-link" to="/g2-rodrigo/candidatos">Candidatos</Link>
+                                <Link className="nav-item nav-link" to="/concursos">Concursos</Link>
+                                <Link className="nav-item nav-link" to="/departamentos">Departamentos</Link>
+                                <Link className="nav-item nav-link" to="/cargos">Cargos</Link>
+                                <Link className="nav-item nav-link" to="/candidatos">Candidatos</Link>
                             </div>
                         </div>
                     </nav>
-                    <Route exact path="/g2-rodrigo" component={Dashboard}/>
-                    <Route path="/g2-rodrigo/concursos" component={Concursos}/>
-                    <Route path="/g2-rodrigo/etapas" component={Etapas}/>
-                    <Route path="/g2-rodrigo/candidatos-etapa" component={CandidatosEtapa}/>
-                    <Route path="/g2-rodrigo/concurso" component={ConcursoForm}/>
-                    <Route path="/g2-rodrigo/departamentos" component={Departamentos}/>
-                    <Route path="/g2-rodrigo/cargos" component={Cargos}/>
-                    <Route path="/g2-rodrigo/candidatos" component={Candidatos}/>
+                    <Route exact path="/" component={Dashboard}/>
+                    <Route path="/concursos" component={Concursos}/>
+                    <Route path="/etapas" component={Etapas}/>
+                    <Route path="/candidatos-etapa" component={CandidatosEtapa}/>
+                    <Route path="/concurso" component={ConcursoForm}/>
+                    <Route path="/departamentos" component={Departamentos}/>
+                    <Route path="/cargos" component={Cargos}/>
+                    <Route path="/candidatos" component={Candidatos}/>
                 </div>
             </Router>
         );

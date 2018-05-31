@@ -3,7 +3,7 @@ import ReactTable from "react-table";
 
 function actions() {
     return <div>
-        <a href="/g2-rodrigo/concursos" className="badge badge-primary ml-2">Concuros</a>
+        <a href="/concursos" className="badge badge-primary ml-2">Concuros</a>
         <a href="#" className="badge badge-secondary ml-2">Excluir</a>
     </div>
 }

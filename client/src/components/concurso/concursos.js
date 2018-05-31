@@ -1,12 +1,12 @@
 import React, {Component} from "react";
 import ReactTable from "react-table";
 
-let formURL = "/g2-rodrigo/concurso/";
+let formURL = "/concurso/";
 
 function actions() {
 
     return <div>
-        <a href="/g2-rodrigo/etapas" className="badge badge-primary ml-2">Etapas</a>
+        <a href="/etapas" className="badge badge-primary ml-2">Etapas</a>
         <a href="#" className="badge badge-secondary ml-2">Excluir</a>
     </div>
 }
