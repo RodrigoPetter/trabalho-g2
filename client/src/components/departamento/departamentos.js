@@ -11,36 +11,42 @@ function actions() {
     </div>;
 }
 
-const data = [{
-    id: 1,
-    nome: 'Recursos Humanos',
-    acoes: actions()
-}, {
-    id: 2,
-    nome: 'Unidade de desenvolvimento de sistemas',
-    acoes: actions()
-}, {
-    id: 3,
-    nome: 'DEP 3',
-    acoes: actions()
-}];
-
-const columns = [{
-    Header: 'ID',
-    accessor: 'id' // String-based value accessors!
-}, {
-    Header: 'Nome',
-    accessor: 'nome',
-    width: getColumnWidth(data, 'nome', 'Nome')
-}, {
-    Header: 'Ações',
-    accessor: 'acoes',
-    filterable: false,
-    minWidth: 150
-}];
-
 class Departamentos extends Component {
+    constructor() {
+        super();
+        this.state = {
+            data: []
+        }
+    }
+
+    componentDidMount() {
+        fetch('http://localhost/trabalho-g2/server/DepartamentoAPI.php').then(response => {
+            response.json().then(json => {
+                json.forEach(item => {
+                    item.acoes = actions();
+                });
+                this.setState({data: json});
+            })
+        })
+    }
+
+
     render() {
+        let columns = [{
+            Header: 'ID',
+            accessor: 'id' // String-based value accessors!
+        }, {
+            Header: 'Nome',
+            accessor: 'nome',
+            width: getColumnWidth(this.state.data, 'nome', 'Nome')
+        }, {
+            Header: 'Ações',
+            accessor: 'acoes',
+            filterable: false,
+            minWidth: 150
+        }];
+
+        console.log(this.state.data);
         return (
             <div className="container bg-white">
                 <h3 className="border-bottom border-gray pb-2 mb-0">Departamentos</h3>
@@ -55,7 +61,7 @@ class Departamentos extends Component {
                 </div>
                 <div className="row margin15">
                     <ReactTable
-                        data={data}
+                        data={this.state.data}
                         columns={columns}
                         showPagination={false}
                         minRows={0}

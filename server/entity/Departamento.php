@@ -2,8 +2,8 @@
 
 class Departamento
 {
-    private $id;
-    private $nome;
+    public $id;
+    public $nome;
 
     public function getId()
     {
