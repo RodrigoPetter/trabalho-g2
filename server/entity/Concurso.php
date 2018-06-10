@@ -2,10 +2,10 @@
 
 class Concurso
 {
-    private $id;
-    private $descricao;
-    private $data;
-    private $local;
+    public $id;
+    public $descricao;
+    public $data;
+    public $local;
 
     public function getId()
     {

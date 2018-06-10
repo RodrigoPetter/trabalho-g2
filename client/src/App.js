@@ -35,6 +35,7 @@ class App extends Component {
                         <Route path="/concursos" component={Concursos}/>
                         <Route path="/concurso/:id/etapas" component={Etapas}/>
                         <Route path="/candidatos-etapa" component={CandidatosEtapa}/>
+                        <Route path="/concurso/:id/" component={ConcursoForm}/>
                         <Route path="/concurso" component={ConcursoForm}/>
 
                         <Route path="/departamentos" component={Departamentos}/>

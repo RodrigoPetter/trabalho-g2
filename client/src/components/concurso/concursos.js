@@ -1,77 +1,86 @@
 import React, {Component} from "react";
 import ReactTable from "react-table";
+import moment from "moment";
+import {getColumnWidth} from "../reacttable/tableUtils";
+import concursoClient from "../../client/concursoClient";
 
 let formURL = "/concurso/";
 
-function actions(id) {
-    return <div>
-        <a href={"concurso/" + id + "/etapas"} className="badge badge-primary ml-2">Etapas</a>
-        <a href="#" className="badge badge-secondary ml-2">Excluir</a>
-    </div>
-}
-
-const data = [{
-    id: '1',
-    descricao: 'Concurso 1',
-    data: '2018-05-17',
-    local: 'Porto Alegre',
-    etapa: 'Inscrições',
-    acoes: actions(1)
-}, {
-    id: '2',
-    descricao: 'Concurso 2',
-    data: '2018-05-17',
-    local: 'Porto Alegre',
-    etapa: 'Avaliação Médica',
-    acoes: actions(1)
-}, {
-    id: '3',
-    descricao: 'Concurso 3',
-    data: '2018-05-17',
-    local: 'Porto Alegre',
-    etapa: 'Inscrições',
-    acoes: actions(1)
-}, {
-    id: '4',
-    descricao: 'Concurso 4',
-    data: '2018-05-17',
-    local: 'Porto Alegre',
-    etapa: 'Inscrições',
-    acoes: actions(1)
-}, {
-    id: '5',
-    descricao: 'Concurso 5',
-    data: '2018-05-17',
-    local: 'Porto Alegre',
-    etapa: 'Inscrições',
-    acoes: actions(1)
-}];
-
-const columns = [{
-    Header: 'ID',
-    accessor: 'id' // String-based value accessors!
-}, {
-    Header: 'Descrição',
-    accessor: 'descricao' // String-based value accessors!
-}, {
-    Header: 'Data',
-    accessor: 'data'
-}, {
-    Header: 'Local',
-    accessor: 'local'
-}, {
-    Header: 'Etapa atual',
-    accessor: 'etapa',
-    minWidth: 150
-}, {
-    Header: 'Ações',
-    accessor: 'acoes',
-    filterable: false,
-    minWidth: 150
-}];
-
 class Concursos extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            data: [],
+            loading: true
+        };
+    }
+
+    componentDidMount() {
+        concursoClient.getAll(json => {
+            this.setState({data: json});
+        }).finally(() => {
+            this.setState({loading: false})
+        });
+    }
+
+    delete(event, value) {
+        event.preventDefault();
+        concursoClient.delete(value, (response) => {
+            this.componentDidMount();
+        });
+    }
+
+    editar(event, value) {
+        event.preventDefault();
+        this.props.history.push('concurso/' + value + '/');
+    }
+
+    etapas(event, value) {
+        event.preventDefault();
+        //TODO
+    }
+
     render() {
+        console.log('render: ', this.state.data);
+        const columns = [{
+            Header: 'ID',
+            accessor: 'id'
+        }, {
+            Header: 'Descrição',
+            accessor: 'descricao',
+            width: getColumnWidth(this.state.data, 'descricao', 'Descrição')
+        }, {
+            Header: 'Data',
+            id: 'data',
+            accessor: d => {
+                return moment(d.data, 'YYYY-MM-DD').format('DD/MM/YYYY')
+            }
+        }, {
+            Header: 'Local',
+            accessor: 'local',
+            width: getColumnWidth(this.state.data, 'descricao', 'Descrição')
+        }, {
+            Header: 'Etapa atual',
+            accessor: 'etapa',
+            width: getColumnWidth(this.state.data, 'etapa', 'Etapa atual')
+        }, {
+            Header: 'Ações',
+            accessor: 'id',
+            filterable: false,
+            minWidth: 190,
+            Cell: ({value}) => (<div>
+                <a href="#" onClick={(event) => {
+                    this.etapas(event, value)
+                }} className="badge badge-primary ml-2">Etapas</a>
+                <a href="#" onClick={(event) => {
+                    this.editar(event, value)
+                }} className="badge badge-secondary ml-2">Editar</a>
+                <a href="#" onClick={(event) => {
+                    this.delete(event, value)
+                }} className="badge badge-secondary ml-2">Excluir</a>
+            </div>)
+        }];
+
         return (
             <div className="container bg-white">
                 <h3 className="border-bottom border-gray pb-2 mb-0">Concursos</h3>
@@ -86,9 +95,10 @@ class Concursos extends Component {
                 </div>
                 <div className="row margin15">
                     <ReactTable
-                        data={data}
+                        data={this.state.data}
                         columns={columns}
                         showPagination={false}
+                        loading={this.state.loading}
                         minRows={0}
                         filterable
                     />
