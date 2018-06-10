@@ -9,13 +9,34 @@ class CargoRepository extends Repository
         parent::__construct('cargo');
     }
 
-    public function findAll(){
+    public function findAll()
+    {
         $query = parent::findAll();
         return $query->fetchAll(PDO::FETCH_CLASS, Cargo::class);
     }
 
-    public function findOne($id){
+    public function findOne($id)
+    {
         $query = parent::findOne($id);
         return $query->fetchAll(PDO::FETCH_CLASS, Cargo::class);
+    }
+
+    public function _insert($data)
+    {
+        $fields = array('id', 'nome');
+        $values = array(null, $data['nome']);
+        return parent::insert($fields, $values);
+    }
+
+    public function _update($id, $data)
+    {
+        $fields = array('nome');
+        $values = array($data['nome']);
+        return parent::update($id, $fields, $values);
+    }
+
+    public function delete($id)
+    {
+        return parent::delete($id);
     }
 }

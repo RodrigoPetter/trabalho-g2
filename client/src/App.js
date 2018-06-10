@@ -4,9 +4,11 @@ import {BrowserRouter as Router, Route, NavLink, Switch} from "react-router-dom"
 import Concursos from "./components/concurso/concursos";
 import ConcursoForm from "./components/concurso/concursoForm";
 import Cargos from "./components/cargo/cargos";
+import CargoForm from "./components/cargo/cargoForm";
 import Dashboard from "./components/dashboard/dashboard";
 import Candidatos from "./components/candidato/candidatos";
 import Departamentos from "./components/departamento/departamentos";
+import DepartamentoForm from "./components/departamento/departamentoForm";
 import Etapas from "./components/concurso/etapas";
 import CandidatosEtapa from "./components/concurso/candidatos_etapa";
 
@@ -32,8 +34,14 @@ class App extends Component {
                         <Route path="/concurso/:id/etapas" component={Etapas}/>
                         <Route path="/candidatos-etapa" component={CandidatosEtapa}/>
                         <Route path="/concurso" component={ConcursoForm}/>
+
                         <Route path="/departamentos" component={Departamentos}/>
+                        <Route path="/departamento/:id/" component={DepartamentoForm}/>
+                        <Route path="/departamento" component={DepartamentoForm}/>
+
                         <Route path="/cargos" component={Cargos}/>
+                        <Route path="/cargo/:id/" component={CargoForm}/>
+                        <Route path="/cargo" component={CargoForm}/>
                         <Route path="/candidatos" component={Candidatos}/>
                     </Switch>
                 </div>

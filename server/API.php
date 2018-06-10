@@ -6,10 +6,19 @@ abstract class API implements ApiInterface
 
     function trigger()
     {
-        if (count($_POST) > 0) {
-            $this->processPost();
-        } else {
-            $this->processGet();
+        switch ($_SERVER['REQUEST_METHOD']) {
+            case 'POST':
+                $this->processPost();
+                break;
+            case 'GET':
+                $this->processGet();
+                break;
+            case 'DELETE':
+                $this->delete($_GET['id']);
+                break;
+            default:
+                $this->processGet();
+                break;
         }
     }
 
@@ -23,22 +32,28 @@ abstract class API implements ApiInterface
             $result = $this->getAll();
         }
 
-//        var_dump($result);
-
         echo $this->toJson($result);
     }
 
     function processPost()
     {
-        // TODO: Implement processPost() method.
+        $result = null;
+
+        if (isset($_GET['id'])) {
+            $result = $this->update($_GET['id'], $_POST);
+        } else {
+            $result = $this->insert($_POST);
+        }
+
+        echo $this->toJson($result);
     }
 
 
     function toJson($object)
     {
         $encode = json_encode((array)$object);
-        if(!$encode){
-            return '{erro: '.json_last_error_msg().'}';
+        if (!$encode) {
+            return '{erro: ' . json_last_error_msg() . '}';
         }
         return $encode;
     }

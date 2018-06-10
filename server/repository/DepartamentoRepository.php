@@ -1,6 +1,6 @@
 <?php
-require_once __DIR__.'/../database/Repository.php';
-require_once __DIR__.'/../entity/Departamento.php';
+require_once __DIR__ . '/../database/Repository.php';
+require_once __DIR__ . '/../entity/Departamento.php';
 
 class DepartamentoRepository extends Repository
 {
@@ -9,13 +9,34 @@ class DepartamentoRepository extends Repository
         parent::__construct('departamento');
     }
 
-    public function findAll(){
+    public function findAll()
+    {
         $query = parent::findAll();
         return $query->fetchAll(PDO::FETCH_CLASS, Departamento::class);
     }
 
-    public function findOne($id){
+    public function findOne($id)
+    {
         $query = parent::findOne($id);
         return $query->fetchAll(PDO::FETCH_CLASS, Departamento::class);
+    }
+
+    public function _insert($data)
+    {
+        $fields = array('id', 'nome');
+        $values = array(null, $data['nome']);
+        return parent::insert($fields, $values);
+    }
+
+    public function _update($id, $data)
+    {
+        $fields = array('nome');
+        $values = array($data['nome']);
+        return parent::update($id, $fields, $values);
+    }
+
+    public function delete($id)
+    {
+        return parent::delete($id);
     }
 }
