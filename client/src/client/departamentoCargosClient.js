@@ -1,15 +1,23 @@
 import configuration from "../configuration";
+import cargoClient from "./cargoClient";
 
-let url = configuration.baseURL + 'CargoAPI.php';
+let url = configuration.baseURL + 'DepartamentoCargoAPI.php';
 
-class cargoClient {
+class departamentoCargoClient {
 
-    static getAll(callback) {
-        return fetch(url)
+    static getAll(departamentoId, callback) {
+        return fetch(url + '?departamento_id=' + departamentoId)
             .then(response => {
                 let temp = response.clone();
                 response.json()
-                    .then(callback)
+                    .then(depCargos => {
+                        depCargos.forEach(item => {
+                            cargoClient.getOne(item.cargo_id, cargo => {
+                                item.cargo = cargo[0];
+                                callback(depCargos)
+                            })
+                        });
+                    })
                     .catch(error => {
                         alert("Erro no parse da mensagem: " + error);
                         temp.text()
@@ -36,8 +44,8 @@ class cargoClient {
             });
     }
 
-    static salvar(id, data, callback) {
-        return fetch(url + (!id ? '' : '?id=' + id), {
+    static salvar(data, callback) {
+        return fetch(url, {
             method: 'POST',
             body: data,
         })
@@ -55,8 +63,8 @@ class cargoClient {
             })
     }
 
-    static delete(id, callback) {
-        return fetch(url + '?id=' + id, {
+    static delete(departamento_id, cargo_id, callback) {
+        return fetch(url + '?departamento_id=' + departamento_id + '&cargo_id=' + cargo_id, {
             method: 'DELETE'
         }).then(response => {
             if (!response.ok) {
@@ -70,4 +78,4 @@ class cargoClient {
     }
 }
 
-export default cargoClient;
+export default departamentoCargoClient;

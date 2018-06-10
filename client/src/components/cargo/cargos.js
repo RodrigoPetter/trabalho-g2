@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import ReactTable from "react-table";
 import {getColumnWidth} from "../reacttable/tableUtils";
-import configuration from "../../configuration";
+import cargoClient from "../../client/cargoClient";
 
 let formURL = "cargo/";
 
@@ -15,31 +15,19 @@ class Cargos extends Component {
     }
 
     componentDidMount() {
-        fetch(configuration.baseURL + 'CargoAPI.php')
-            .then(response => {
-                let temp = response.clone();
-                response.json().then(json => {
-                    this.setState({data: json});
-                }).catch(error => {
-                    alert("Erro no parse da mensagem: " + error);
-                    temp.text().then(text => {
-                        alert("Mensagem original: " + text);
-                    });
-                })
-            })
-            .catch(error => {
-                alert("Error: " + error);
-            })
+
+        cargoClient.getAll(json => {
+            this.setState({data: json})
+        })
             .finally(() => {
                 this.setState({loading: false})
-            })
+            });
+
     }
 
     delete(event, value) {
         event.preventDefault();
-        fetch(configuration.baseURL + 'CargoAPI.php?id=' + value, {
-            method: 'DELETE'
-        }).then(response => {
+        cargoClient.delete(value, response => {
             this.componentDidMount();
         });
     }

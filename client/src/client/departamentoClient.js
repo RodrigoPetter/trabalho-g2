@@ -1,8 +1,8 @@
 import configuration from "../configuration";
 
-let url = configuration.baseURL + 'CargoAPI.php';
+let url = configuration.baseURL + 'DepartamentoAPI.php';
 
-class cargoClient {
+class departamentoClient {
 
     static getAll(callback) {
         return fetch(url)
@@ -70,4 +70,4 @@ class cargoClient {
     }
 }
 
-export default cargoClient;
+export default departamentoClient;

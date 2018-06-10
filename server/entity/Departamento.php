@@ -4,7 +4,6 @@ class Departamento
 {
     public $id;
     public $nome;
-    public $cargos;
 
     public function getId()
     {
@@ -25,16 +24,5 @@ class Departamento
     {
         $this->nome = $nome;
     }
-
-    public function getCargos()
-    {
-        return $this->cargos;
-    }
-
-    public function setCargos($cargos)
-    {
-        $this->cargos = $cargos;
-    }
-
 
 }

@@ -1,7 +1,8 @@
 import React, {Component} from "react";
 import ReactTable from "react-table";
 import {getColumnWidth} from "../reacttable/tableUtils";
-import configuration from "../../configuration";
+import departamentoCargoClient from "../../client/departamentoCargosClient";
+import departamentoClient from "../../client/departamentoClient";
 
 let formURL = "cargo/";
 
@@ -11,55 +12,44 @@ class DepartamentoCargos extends Component {
         this.state = {
             data: [],
             departamento: props.match.params.id,
+            departamentoNome: "",
             loading: true
         };
     }
 
     componentDidMount() {
-        fetch(configuration.baseURL + 'DepartamentoCargoAPI.php?departamento_id=' + this.state.departamento)
-            .then(response => {
-                let temp = response.clone();
-                response.json().then(colecao => {
-
-                    colecao.forEach(depCargo => {
-                    console.log(depCargo);
-                    });
-
-                }).catch(error => {
-                    alert("Erro no parse da mensagem: " + error);
-                    temp.text().then(text => {
-                        alert("Mensagem original: " + text);
-                    });
-                })
-            })
-            .catch(error => {
-                alert("Error: " + error);
-            })
+        this.setState({data: []});
+        departamentoCargoClient.getAll(this.state.departamento, depCargos => {
+            this.setState({data: depCargos});
+        })
             .finally(() => {
                 this.setState({loading: false})
-            })
+            });
+
+        departamentoClient.getOne(this.state.departamento, departamento =>{
+            this.state.departamentoNome = departamento[0].nome;
+        })
     }
 
     delete(event, value) {
         event.preventDefault();
-        fetch(configuration.baseURL + 'DepartamentoCargosAPI.php?id=' + value, {
-            method: 'DELETE'
-        }).then(response => {
-            this.componentDidMount();
+        departamentoCargoClient.delete(this.state.departamento, value, ()=>{
+           this.componentDidMount();
         });
     }
 
     render() {
+
         let columns = [{
             Header: 'ID',
-            accessor: 'id'
+            accessor: 'cargo_id'
         }, {
-            Header: 'Nome',
-            accessor: 'nome',
-            width: getColumnWidth(this.state.data, 'nome', 'Nome')
+            Header: 'Cargo',
+            accessor: 'cargo.nome',
+            width: getColumnWidth(this.state.data, 'cargo.nome', 'Cargo')
         }, {
             Header: 'Ações',
-            accessor: 'id',
+            accessor: 'cargo_id',
             filterable: false,
             minWidth: 100,
             Cell: ({value}) => (<div>
@@ -68,16 +58,16 @@ class DepartamentoCargos extends Component {
                 }} className="badge badge-secondary ml-2">Excluir</a>
             </div>)
         }];
-
+        console.log('render: ', this.state.data);
         return (
             <div className="container bg-white">
-                <h3 className="border-bottom border-gray pb-2 mb-0">Cargos</h3>
+                <h3 className="border-bottom border-gray pb-2 mb-0">Cargos do departamento {this.state.departamentoNome}</h3>
                 <div className="row margin15">
                     <div className="col">
                         <button type="button" className="btn btn-primary btn-sm"
                                 onClick={function () {
                                     document.location.href = formURL
-                                }}>Novo cargo
+                                }}>Adicionar cargo
                         </button>
                     </div>
                 </div>

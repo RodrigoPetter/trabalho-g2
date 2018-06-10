@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import ReactTable from "react-table";
 import {getColumnWidth} from "../reacttable/tableUtils";
-import configuration from "../../configuration";
+import departamentoClient from "../../client/departamentoClient";
 
 let formURL = "departamento/";
 
@@ -15,31 +15,16 @@ class Departamentos extends Component {
     }
 
     componentDidMount() {
-        fetch(configuration.baseURL + 'DepartamentoAPI.php')
-            .then(response => {
-                let temp = response.clone();
-                response.json().then(json => {
-                    this.setState({data: json});
-                }).catch(error => {
-                    alert("Erro no parse da mensagem: " + error);
-                    temp.text().then(text => {
-                        alert("Mensagem original: " + text);
-                    });
-                })
-            })
-            .catch(error => {
-                alert("Error: " + error);
-            })
-            .finally(() => {
-                this.setState({loading: false})
-            })
+        departamentoClient.getAll(json => {
+            this.setState({data: json});
+        }).finally(() => {
+            this.setState({loading: false})
+        });
     }
 
     delete(event, value) {
         event.preventDefault();
-        fetch(configuration.baseURL + 'DepartamentoAPI.php?id=' + value, {
-            method: 'DELETE'
-        }).then(response => {
+        departamentoClient.delete(value, (response) => {
             this.componentDidMount();
         });
     }

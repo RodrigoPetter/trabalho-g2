@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import configuration from "../../configuration";
+import cargoClient from "../../client/cargoClient";
 
 class cargoForm extends Component {
     constructor(props) {
@@ -9,27 +9,17 @@ class cargoForm extends Component {
         };
 
         this.salvar = this.salvar.bind(this);
-        this.getURL = this.getURL.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
 
     componentDidMount() {
         if (this.state.formInputs.id) {
-            fetch(this.getURL())
-                .then(response => {
-                    let temp = response.clone();
-                    response.json().then(json => {
-                        console.log(json);
-                        this.setState(() => {
-                            return {formInputs: {id: this.state.formInputs.id, nome: json[0].nome}}
-                        });
-                    }).catch(error => {
-                        alert("Erro no parse da mensagem: " + error);
-                        temp.text().then(text => {
-                            alert("Mensagem original: " + text);
-                        });
-                    })
+            cargoClient.getOne(this.state.formInputs.id, json => {
+                console.log(json);
+                this.setState(() => {
+                    return {formInputs: {id: this.state.formInputs.id, nome: json[0].nome}}
                 });
+            });
         }
     }
 
@@ -41,31 +31,12 @@ class cargoForm extends Component {
         this.setState(statusCopy);
     }
 
-    getURL() {
-        let URL = configuration.baseURL + 'CargoAPI.php' + (!this.state.formInputs.id ? '' : '?id=' + this.state.formInputs.id);
-        console.log('fetchURL: ', URL);
-        return URL;
-    }
-
     salvar(event) {
         event.preventDefault();
         const data = new FormData(event.target);
-        fetch(this.getURL(),
-            {
-                method: 'POST',
-                body: data,
-            }).then(response => {
-            let temp = response.clone();
-            response.json().then(json => {
-                console.log(json);
-                this.props.history.goBack();
-            }).catch(error => {
-                alert("Erro no parse da mensagem: " + error);
-                temp.text().then(text => {
-                    alert("Mensagem original: " + text);
-                });
-            })
-        })
+        cargoClient.salvar(this.state.formInputs.id, data, () => {
+            this.props.history.goBack();
+        });
     }
 
     render() {

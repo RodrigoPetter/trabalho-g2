@@ -10,6 +10,7 @@ import Candidatos from "./components/candidato/candidatos";
 import Departamentos from "./components/departamento/departamentos";
 import DepartamentoForm from "./components/departamento/departamentoForm";
 import DepartamentoCargos from "./components/departamento/departamentoCargos";
+import DepartamentoCargoForm from "./components/departamento/departamentoCargoForm";
 import Etapas from "./components/concurso/etapas";
 import CandidatosEtapa from "./components/concurso/candidatos_etapa";
 
@@ -38,6 +39,7 @@ class App extends Component {
 
                         <Route path="/departamentos" component={Departamentos}/>
                         <Route path="/departamento/:id/cargos" component={DepartamentoCargos}/>
+                        <Route path="/departamento/:id/cargo" component={DepartamentoCargoForm}/>
                         <Route path="/departamento/:id/" component={DepartamentoForm}/>
                         <Route path="/departamento" component={DepartamentoForm}/>
 

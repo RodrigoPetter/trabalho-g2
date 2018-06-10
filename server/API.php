@@ -1,5 +1,11 @@
 <?php
 require_once 'ApiInterface.php';
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, POST, DELETE');
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+
 
 abstract class API implements ApiInterface
 {
@@ -26,7 +32,7 @@ abstract class API implements ApiInterface
     {
         $result = null;
 
-        if (isset($_GET['id'])) {
+        if (count($_GET) > 0) {
             $result = $this->getOne($_GET);
         } else {
             $result = $this->getAll();

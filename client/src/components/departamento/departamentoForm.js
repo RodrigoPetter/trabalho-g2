@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import configuration from "../../configuration";
+import departamentoClient from "../../client/departamentoClient";
 
 class DepartamentoForm extends Component {
     constructor(props) {
@@ -9,27 +9,17 @@ class DepartamentoForm extends Component {
         };
 
         this.salvar = this.salvar.bind(this);
-        this.getURL = this.getURL.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
 
     componentDidMount() {
         if (this.state.formInputs.id) {
-            fetch(this.getURL())
-                .then(response => {
-                    let temp = response.clone();
-                    response.json().then(json => {
-                        console.log(json);
-                        this.setState(() => {
-                            return {formInputs: {id: this.state.formInputs.id, nome: json[0].nome}}
-                        });
-                    }).catch(error => {
-                        alert("Erro no parse da mensagem: " + error);
-                        temp.text().then(text => {
-                            alert("Mensagem original: " + text);
-                        });
-                    })
+            departamentoClient.getOne(this.state.formInputs.id, json => {
+                console.log(json);
+                this.setState(() => {
+                    return {formInputs: {id: this.state.formInputs.id, nome: json[0].nome}}
                 });
+            });
         }
     }
 
@@ -41,35 +31,15 @@ class DepartamentoForm extends Component {
         this.setState(statusCopy);
     }
 
-    getURL() {
-        let URL = configuration.baseURL + 'DepartamentoAPI.php' + (!this.state.formInputs.id ? '' : '?id=' + this.state.formInputs.id);
-        console.log('fetchURL: ', URL);
-        return URL;
-    }
-
     salvar(event) {
         event.preventDefault();
         const data = new FormData(event.target);
-        fetch(this.getURL(),
-            {
-                method: 'POST',
-                body: data,
-            }).then(response => {
-            let temp = response.clone();
-            response.json().then(json => {
-                console.log(json);
-                this.props.history.goBack();
-            }).catch(error => {
-                alert("Erro no parse da mensagem: " + error);
-                temp.text().then(text => {
-                    alert("Mensagem original: " + text);
-                });
-            })
-        })
+        departamentoClient.salvar(this.state.formInputs.id, data, () => {
+            this.props.history.goBack();
+        });
     }
 
     render() {
-        console.log(this.state.formInputs);
         return (
             <div className="container bg-white">
                 <h2>{this.state.formInputs.id ? 'Editar' : 'Novo'} departamento</h2>
