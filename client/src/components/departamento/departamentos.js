@@ -15,33 +15,43 @@ class Departamentos extends Component {
     }
 
     componentDidMount() {
-        fetch(configuration.baseURL + 'DepartamentoAPI.php').then(response => {
-            let temp = response.clone();
-            response.json().then(json => {
-                this.setState({data: json});
-            }).catch(error => {
-                alert("Erro no parse da mensagem: " + error);
-                temp.text().then(text => {
-                    alert("Mensagem original: " + text);
-                });
+        fetch(configuration.baseURL + 'DepartamentoAPI.php')
+            .then(response => {
+                let temp = response.clone();
+                response.json().then(json => {
+                    this.setState({data: json});
+                }).catch(error => {
+                    alert("Erro no parse da mensagem: " + error);
+                    temp.text().then(text => {
+                        alert("Mensagem original: " + text);
+                    });
+                })
             })
-        }).finally(() => {
-            this.setState({loading: false})
-        })
+            .catch(error => {
+                alert("Error: " + error);
+            })
+            .finally(() => {
+                this.setState({loading: false})
+            })
     }
 
     delete(event, value) {
         event.preventDefault();
-        fetch(configuration.baseURL + 'DepartamentoAPI.php?id='+value, {
+        fetch(configuration.baseURL + 'DepartamentoAPI.php?id=' + value, {
             method: 'DELETE'
         }).then(response => {
-          this.componentDidMount();
+            this.componentDidMount();
         });
     }
 
     editar(event, value) {
         event.preventDefault();
-        this.props.history.push('departamento/'+value+'/');
+        this.props.history.push('departamento/' + value + '/');
+    }
+
+    cargos(event, value) {
+        event.preventDefault();
+        this.props.history.push('departamento/' + value + '/cargos');
     }
 
     render() {
@@ -58,7 +68,9 @@ class Departamentos extends Component {
             filterable: false,
             minWidth: 190,
             Cell: ({value}) => (<div>
-                <a href="#" className="badge badge-primary ml-2">Cargos</a>
+                <a href="#" onClick={(event) => {
+                    this.cargos(event, value)
+                }} className="badge badge-primary ml-2">Cargos</a>
                 <a href="#" onClick={(event) => {
                     this.editar(event, value)
                 }} className="badge badge-secondary ml-2">Editar</a>

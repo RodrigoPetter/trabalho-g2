@@ -15,9 +15,9 @@ class DepartamentoAPI extends API
         parent::trigger();
     }
 
-    function getOne($id)
+    function getOne($get)
     {
-        return $this->repository->findOne($id);
+        return $this->repository->findOne($get);
     }
 
     function getAll()
@@ -35,9 +35,9 @@ class DepartamentoAPI extends API
         return $this->repository->_update($id, $data);
     }
 
-    function delete($id)
+    function delete($get)
     {
-        return $this->repository->delete($id);
+        return $this->repository->delete($get);
     }
 }
 

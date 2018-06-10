@@ -5,21 +5,26 @@ import configuration from "../../configuration";
 
 let formURL = "cargo/";
 
-class Cargos extends Component {
+class DepartamentoCargos extends Component {
     constructor(props) {
         super(props);
         this.state = {
             data: [],
+            departamento: props.match.params.id,
             loading: true
         };
     }
 
     componentDidMount() {
-        fetch(configuration.baseURL + 'CargoAPI.php')
+        fetch(configuration.baseURL + 'DepartamentoCargoAPI.php?departamento_id=' + this.state.departamento)
             .then(response => {
                 let temp = response.clone();
-                response.json().then(json => {
-                    this.setState({data: json});
+                response.json().then(colecao => {
+
+                    colecao.forEach(depCargo => {
+                    console.log(depCargo);
+                    });
+
                 }).catch(error => {
                     alert("Erro no parse da mensagem: " + error);
                     temp.text().then(text => {
@@ -37,16 +42,11 @@ class Cargos extends Component {
 
     delete(event, value) {
         event.preventDefault();
-        fetch(configuration.baseURL + 'CargoAPI.php?id=' + value, {
+        fetch(configuration.baseURL + 'DepartamentoCargosAPI.php?id=' + value, {
             method: 'DELETE'
         }).then(response => {
             this.componentDidMount();
         });
-    }
-
-    editar(event, value) {
-        event.preventDefault();
-        this.props.history.push('cargo/' + value + '/');
     }
 
     render() {
@@ -61,11 +61,8 @@ class Cargos extends Component {
             Header: 'Ações',
             accessor: 'id',
             filterable: false,
-            minWidth: 150,
+            minWidth: 100,
             Cell: ({value}) => (<div>
-                <a href="#" onClick={(event) => {
-                    this.editar(event, value)
-                }} className="badge badge-secondary ml-2">Editar</a>
                 <a href="#" onClick={(event) => {
                     this.delete(event, value)
                 }} className="badge badge-secondary ml-2">Excluir</a>
@@ -100,4 +97,4 @@ class Cargos extends Component {
 }
 
 
-export default Cargos;
+export default DepartamentoCargos;

@@ -1,17 +1,17 @@
 <?php
 require_once 'API.php';
-require_once __DIR__ . '/repository/CargoRepository.php';
+require_once __DIR__ . '/repository/DepartamentoCargoRepository.php';
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, DELETE');
 
-class CargoAPI extends API
+class DepartamentoCargoAPI extends API
 {
 
     private $repository;
 
     public function __construct()
     {
-        $this->repository = new CargoRepository();
+        $this->repository = new DepartamentoCargoRepository();
         parent::trigger();
     }
 
@@ -32,14 +32,14 @@ class CargoAPI extends API
 
     function update($id, $data)
     {
-        return $this->repository->_update($id, $data);
+        http_response_code(500);
+        throw new Exception("Método não implementado");
     }
 
     function delete($get)
     {
         return $this->repository->delete($get);
     }
-
 }
 
-new CargoAPI();
+new DepartamentoCargoAPI();

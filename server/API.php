@@ -14,7 +14,7 @@ abstract class API implements ApiInterface
                 $this->processGet();
                 break;
             case 'DELETE':
-                $this->delete($_GET['id']);
+                $this->delete($_GET);
                 break;
             default:
                 $this->processGet();
@@ -27,7 +27,7 @@ abstract class API implements ApiInterface
         $result = null;
 
         if (isset($_GET['id'])) {
-            $result = $this->getOne($_GET['id']);
+            $result = $this->getOne($_GET);
         } else {
             $result = $this->getAll();
         }

@@ -15,9 +15,9 @@ class CargoRepository extends Repository
         return $query->fetchAll(PDO::FETCH_CLASS, Cargo::class);
     }
 
-    public function findOne($id)
+    public function findOne($get)
     {
-        $query = parent::findOne($id);
+        $query = parent::findOne($get);
         return $query->fetchAll(PDO::FETCH_CLASS, Cargo::class);
     }
 
@@ -35,8 +35,4 @@ class CargoRepository extends Repository
         return parent::update($id, $fields, $values);
     }
 
-    public function delete($id)
-    {
-        return parent::delete($id);
-    }
 }

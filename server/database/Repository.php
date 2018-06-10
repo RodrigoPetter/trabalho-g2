@@ -18,17 +18,22 @@ class Repository
         $query = $this->conn->prepare("SELECT * FROM {$this->table}");
         if (!$query->execute()) {
             http_response_code(500);
-            return $query->errorInfo();
+            var_dump($query->errorInfo());
+            die;
         }
         return $query;
     }
 
-    public function findOne($id)
+    public function findOne($get)
     {
-        $query = $this->conn->prepare("SELECT * FROM {$this->table} where id = ?");
-        if (!$query->execute(array($id))) {
+        $fields = array_keys($get);
+        $data = array_values($get);
+
+        $query = $this->conn->prepare("SELECT * FROM {$this->table} WHERE ".implode(' = ? AND ', $fields)." = ?");
+        if (!$query->execute($data)) {
             http_response_code(500);
-            return $query->errorInfo();
+            var_dump($query->errorInfo());
+            die;
         }
         return $query;
     }
@@ -43,7 +48,8 @@ class Repository
         $query = $this->conn->prepare("INSERT INTO {$this->table} (" . implode(', ', $fields) . ") VALUES (" . implode(" ,", $temp) . ")");
         if (!$query->execute($values)) {
             http_response_code(500);
-            return $query->errorInfo();
+            var_dump($query->errorInfo());
+            die;
         }
         return true;
     }
@@ -56,17 +62,22 @@ class Repository
 
         if (!$query->execute($values)) {
             http_response_code(500);
-            return $query->errorInfo();
+            var_dump($query->errorInfo());
+            die;
         }
         return true;
     }
 
-    public function delete($id)
+    public function delete($get)
     {
-        $query = $this->conn->prepare("DELETE FROM {$this->table} WHERE id = ?");
-        if (!$query->execute(array($id))) {
+        $fields = array_keys($get);
+        $data = array_values($get);
+
+        $query = $this->conn->prepare("DELETE FROM {$this->table} WHERE ".implode(' = ? AND ', $fields)." = ?");
+        if (!$query->execute($data)) {
             http_response_code(500);
-            return $query->errorInfo();
+            var_dump($query->errorInfo());
+            die;
         }
         return true;
     }
