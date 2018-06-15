@@ -3,10 +3,10 @@ require_once 'Concurso.php';
 
 class Etapa
 {
-    private $id;
-    private $concurso;
-    private $descricao;
-    private $tipo;
+    public $id;
+    public $concurso;
+    public $descricao;
+    public $tipo;
 
     public function getId()
     {

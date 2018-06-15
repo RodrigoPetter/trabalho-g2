@@ -1,79 +1,99 @@
 import React, {Component} from "react";
 import ReactTable from "react-table";
+import {getColumnWidth} from "../reacttable/tableUtils";
+import concursoClient from "../../client/concursoClient";
+import etapaClient from "../../client/etapasClient";
+import moment from "moment/moment";
 
-let formURL = "/etapa/";
-
-function actions() {
-    return <div>
-        <a href="/candidatos-etapa" className="badge badge-primary ml-2">Candidatos</a>
-        <a href="#" className="badge badge-secondary ml-2">Excluir</a>
-    </div>
-}
-
-const data = [{
-    id: '1',
-    descricao: 'Etapa 1',
-    tipo: 'Eliminatória',
-    acoes: actions()
-}, {
-    id: '2',
-    descricao: 'Etapa 2',
-    tipo: 'Etapa',
-    acoes: actions()
-}, {
-    id: '3',
-    descricao: 'Etapa 3',
-    tipo: 'Eliminatória',
-    acoes: actions()
-}, {
-    id: '4',
-    descricao: 'Etapa 4',
-    tipo: 'Eliminatória',
-    acoes: actions()
-}];
-
-const columns = [{
-    Header: 'ID',
-    accessor: 'id'
-}, {
-    Header: 'Descrição',
-    accessor: 'descricao'
-}, {
-    Header: 'Tipo',
-    accessor: 'tipo'
-}, {
-    Header: 'Ações',
-    accessor: 'acoes',
-    filterable: false,
-    minWidth: 150
-}];
+let formURL = "etapa/";
 
 class Etapas extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
-            concursoId: props.match.params.id
+            data: [],
+            concurso: props.match.params.id,
+            concursoDescricao: "",
+            loading: true
         };
     }
 
+    componentDidMount() {
+        this.setState({data: []});
+        etapaClient.getAll(this.state.concurso, etapas => {
+            this.setState({data: etapas});
+        })
+            .finally(() => {
+                this.setState({loading: false})
+            });
+
+        concursoClient.getOne(this.state.concurso, concurso => {
+            this.setState({concursoDescricao: concurso[0].descricao});
+        })
+    }
+
+    delete(event, value) {
+        event.preventDefault();
+        etapaClient.delete(this.state.concurso, value, () => {
+            this.componentDidMount();
+        });
+    }
+
+    editar(event, value) {
+        event.preventDefault();
+        this.props.history.push('/concurso/' + this.state.concurso + '/etapa/' + value);
+    }
+
     render() {
+
+        let columns = [{
+            Header: 'ID',
+            accessor: 'id'
+        }, {
+            Header: 'Descricao',
+            accessor: 'descricao',
+            width: getColumnWidth(this.state.data, 'descricao', 'Descricao')
+        }, {
+            Header: 'Tipo',
+            id: 'tipo',
+            accessor: d => {
+                return (d.tipo === "1" ? "Classificatória" : "Eliminatória")
+            },
+            width: 190
+        }, {
+            Header: 'Ações',
+            accessor: 'id',
+            filterable: false,
+            minWidth: 150,
+            Cell: ({value}) => (<div>
+                <a href="#" onClick={(event) => {
+                    this.editar(event, value)
+                }} className="badge badge-secondary ml-2">Editar</a>
+                <a href="#" onClick={(event) => {
+                    this.delete(event, value)
+                }} className="badge badge-secondary ml-2">Excluir</a>
+            </div>)
+        }];
+        console.log('render: ', this.state);
         return (
             <div className="container bg-white">
-                <h3 className="border-bottom border-gray pb-2 mb-0">Etapas do concurso {this.state.concursoId}</h3>
+                <h3 className="border-bottom border-gray pb-2 mb-0">Etapas do
+                    concurso {this.state.concursoDescricao}</h3>
                 <div className="row margin15">
                     <div className="col">
                         <button type="button" className="btn btn-primary btn-sm"
                                 onClick={function () {
                                     document.location.href = formURL
-                                }}>Nova etapa
+                                }}>Adicionar etapa
                         </button>
                     </div>
                 </div>
                 <div className="row margin15">
                     <ReactTable
-                        data={data}
+                        data={this.state.data}
                         columns={columns}
                         showPagination={false}
+                        loading={this.state.loading}
                         minRows={0}
                         filterable
                     />
@@ -82,5 +102,6 @@ class Etapas extends Component {
         );
     }
 }
+
 
 export default Etapas;

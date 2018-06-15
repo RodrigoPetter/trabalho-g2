@@ -37,7 +37,7 @@ class Concursos extends Component {
 
     etapas(event, value) {
         event.preventDefault();
-        //TODO
+        this.props.history.push('concurso/' + value + '/etapas');
     }
 
     render() {
