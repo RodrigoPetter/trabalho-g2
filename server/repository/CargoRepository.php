@@ -28,11 +28,4 @@ class CargoRepository extends Repository
         return parent::insert($fields, $values);
     }
 
-    public function _update($id, $data)
-    {
-        $fields = array('nome');
-        $values = array($data['nome']);
-        return parent::update($id, $fields, $values);
-    }
-
 }

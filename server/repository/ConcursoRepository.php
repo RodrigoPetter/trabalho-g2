@@ -28,11 +28,4 @@ class ConcursoRepository extends Repository
         return parent::insert($fields, $values);
     }
 
-    public function _update($id, $data)
-    {
-        $fields = array('descricao', 'data', 'local');
-        $values = array($data['descricao'], $data['data'], $data['local']);
-        return parent::update($id, $fields, $values);
-    }
-
 }

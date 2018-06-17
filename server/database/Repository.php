@@ -54,13 +54,19 @@ class Repository
         return true;
     }
 
-    public function update($id, $fields, $values)
+    public function update($filtros, $data)
     {
-        array_push($values, $id);
+        $data_fields = array_keys($data);
+        $data = array_values($data);
 
-        $query = $this->conn->prepare("UPDATE {$this->table} SET " . implode(' = ?, ', $fields) . " = ? WHERE id = ?");
+        $filtro_fields = array_keys($filtros);
+        foreach (array_values($filtros) as $filtro){
+            array_push($data, $filtro);
+        }
 
-        if (!$query->execute($values)) {
+        $query = $this->conn->prepare("UPDATE {$this->table} SET " . implode(' = ?, ', $data_fields) . " = ? WHERE ".implode(' = ? AND ', $filtro_fields)." = ?");
+
+        if (!$query->execute($data)) {
             http_response_code(500);
             var_dump($query->errorInfo());
             die;

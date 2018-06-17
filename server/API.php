@@ -45,8 +45,8 @@ abstract class API implements ApiInterface
     {
         $result = null;
 
-        if (isset($_GET['id'])) {
-            $result = $this->update($_GET['id'], $_POST);
+        if (count($_GET) > 0) {
+            $result = $this->update($_GET, $_POST);
         } else {
             $result = $this->insert($_POST);
         }

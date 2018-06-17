@@ -28,9 +28,9 @@ class ConcursoAPI extends API
         return $this->repository->_insert($data);
     }
 
-    function update($id, $data)
+    function update($get, $data)
     {
-        return $this->repository->_update($id, $data);
+        return $this->repository->update($get, $data);
     }
 
     function delete($get)

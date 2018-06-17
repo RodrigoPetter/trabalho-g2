@@ -40,6 +40,11 @@ class Concursos extends Component {
         this.props.history.push('concurso/' + value + '/etapas');
     }
 
+    vagas(event, value) {
+        event.preventDefault();
+        this.props.history.push('concurso/' + value + '/vagas');
+    }
+
     render() {
         console.log('render: ', this.state.data);
         const columns = [{
@@ -67,11 +72,14 @@ class Concursos extends Component {
             Header: 'Ações',
             accessor: 'id',
             filterable: false,
-            minWidth: 190,
+            minWidth: 220,
             Cell: ({value}) => (<div>
                 <a href="#" onClick={(event) => {
                     this.etapas(event, value)
                 }} className="badge badge-primary ml-2">Etapas</a>
+                <a href="#" onClick={(event) => {
+                    this.vagas(event, value)
+                }} className="badge badge-primary ml-2">Vagas</a>
                 <a href="#" onClick={(event) => {
                     this.editar(event, value)
                 }} className="badge badge-secondary ml-2">Editar</a>

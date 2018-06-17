@@ -1,32 +1,30 @@
 <?php
-require_once 'Concurso.php';
-require_once 'Cargo.php';
 
 class ConcursoCargo
 {
-    private $concuros;
-    private $cargo;
-    private $vagas;
+    public $concurso_id;
+    public $cargo_id;
+    public $vagas;
 
     public function getConcuros()
     {
-        return $this->concuros;
+        return $this->concurso_id;
     }
 
 
-    public function setConcuros(Concurso $concuros)
+    public function setConcuros($concuros)
     {
-        $this->concuros = $concuros;
+        $this->concurso_id = $concuros;
     }
 
     public function getCargo()
     {
-        return $this->cargo;
+        return $this->cargo_id;
     }
 
-    public function setCargo(Cargo $cargo)
+    public function setCargo($cargo)
     {
-        $this->cargo = $cargo;
+        $this->cargo_id = $cargo;
     }
 
     public function getVagas()

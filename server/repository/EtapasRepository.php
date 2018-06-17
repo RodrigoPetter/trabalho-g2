@@ -29,11 +29,4 @@ class EtapasRepository extends Repository
         return parent::insert($fields, $values);
     }
 
-    public function _update($id, $data)
-    {
-        $fields = array('concurso_id', 'descricao', 'tipo');
-        $values = array($data['concurso_id'], $data['descricao'], $data['tipo']);
-        return parent::update($id, $fields, $values);
-    }
-
 }

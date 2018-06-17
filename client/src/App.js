@@ -14,6 +14,8 @@ import DepartamentoCargoForm from "./components/departamento/departamentoCargoFo
 import Etapas from "./components/concurso/etapas";
 import CandidatosEtapa from "./components/concurso/candidatos_etapa";
 import EtapaForm from "./components/concurso/etapaForm";
+import Vagas from "./components/concurso/vagas";
+import VagaForm from "./components/concurso/vagaForm";
 
 class App extends Component {
     render() {
@@ -37,6 +39,9 @@ class App extends Component {
                         <Route path="/concurso/:id/etapas" component={Etapas}/>
                         <Route path="/concurso/:id/etapa/:etapa_id" component={EtapaForm}/>
                         <Route path="/concurso/:id/etapa" component={EtapaForm}/>
+                        <Route path="/concurso/:id/vagas" component={Vagas}/>
+                        <Route path="/concurso/:id/vaga/:cargo_id" component={VagaForm}/>
+                        <Route path="/concurso/:id/vaga" component={VagaForm}/>
                         <Route path="/candidatos-etapa" component={CandidatosEtapa}/>
                         <Route path="/concurso/:id/" component={ConcursoForm}/>
                         <Route path="/concurso" component={ConcursoForm}/>

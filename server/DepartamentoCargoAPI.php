@@ -29,7 +29,7 @@ class DepartamentoCargoAPI extends API
         return $this->repository->_insert($data);
     }
 
-    function update($id, $data)
+    function update($get, $data)
     {
         http_response_code(500);
         throw new Exception("Método não implementado");

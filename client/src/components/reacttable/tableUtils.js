@@ -9,5 +9,5 @@ export function getColumnWidth(rows, accessor, headerText) {
             headerText.length);
         return Math.min(maxWidth, cellLength * magicSpacing);
     }
-    return  Math.min(400, headerText.length * 10);
+    return  Math.min(400, headerText.length * 20);
 }

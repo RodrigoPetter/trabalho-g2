@@ -1,15 +1,16 @@
 <?php
 require_once 'API.php';
-require_once __DIR__ . '/repository/CargoRepository.php';
+require_once __DIR__ . '/repository/VagasRepository.php';
 
-class CargoAPI extends API
+
+class VagasAPI extends API
 {
 
     private $repository;
 
     public function __construct()
     {
-        $this->repository = new CargoRepository();
+        $this->repository = new VagasRepository();
         parent::trigger();
     }
 
@@ -28,16 +29,15 @@ class CargoAPI extends API
         return $this->repository->_insert($data);
     }
 
-    function update($get, $post)
+    function update($get, $data)
     {
-        return $this->repository->update($get, $post);
+        return $this->repository->update($get, $data);;
     }
 
     function delete($get)
     {
         return $this->repository->delete($get);
     }
-
 }
 
-new CargoAPI();
+new VagasAPI();
