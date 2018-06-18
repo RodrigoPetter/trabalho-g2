@@ -69,11 +69,11 @@ class Etapas extends Component {
             Header: 'Ações',
             accessor: 'id',
             filterable: false,
-            minWidth: 150,
+            minWidth: 200,
             Cell: ({value}) => (<div>
                 <a href="#" onClick={(event) => {
                     this.candidatos(event, value)
-                }} className="badge badge-secondary ml-2">Candidatos</a>
+                }} className="badge badge-primary ml-2">Candidatos</a>
                 <a href="#" onClick={(event) => {
                     this.editar(event, value)
                 }} className="badge badge-secondary ml-2">Editar</a>

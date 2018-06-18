@@ -1,61 +1,76 @@
 import React, {Component} from "react";
 import ReactTable from "react-table";
+import {getColumnWidth} from "../reacttable/tableUtils";
+import candidatoEtapaClient from "../../client/candidatoEtapaClient";
+import concursoClient from "../../client/concursoClient";
+import etapasClient from "../../client/etapasClient";
 
-function actions() {
-    return <div>
-        <a href="/concursos" className="badge badge-primary ml-2">Concuros</a>
-        <a href="#" className="badge badge-secondary ml-2">Excluir</a>
-    </div>
-}
+class CandidatosEtapa extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            data: [],
+            concurso: props.match.params.id,
+            etapa: props.match.params.etapa_id,
+            concursoDescricao: "",
+            etapaDescricao: "",
+            loading: true
+        };
+    }
 
-const data = [{
-    candidato: 'Rodrigo',
-    cargo: 'Analista',
-    nota: '5.5',
-    acoes: actions()
-},{
-    candidato: 'Pedro',
-    cargo: 'Analista',
-    nota: '10',
-    acoes: actions()
-},{
-    candidato: 'Ana',
-    cargo: 'Analista',
-    nota: '3',
-    acoes: actions()
-},{
-    candidato: 'Teste',
-    cargo: 'Analista',
-    nota: '9.9',
-    acoes: actions()
-},];
+    componentDidMount() {
+        this.setState({data: []});
+        candidatoEtapaClient.getAll(this.state.concurso, this.state.etapa, candidatos => {
+            this.setState({data: candidatos});
+        })
+            .finally(() => {
+                this.setState({loading: false})
+            });
 
-const columns = [{
-    Header: 'Candidato',
-    accessor: 'candidato'
-}, {
-    Header: 'Cargo',
-    accessor: 'cargo'
-}, {
-    Header: 'Nota',
-    accessor: 'nota'
-}, {
-    Header: 'Ações',
-    accessor: 'acoes',
-    filterable: false,
-    minWidth: 150
-}];
+        concursoClient.getOne(this.state.concurso, concurso => {
+            this.setState({concursoDescricao: concurso[0].descricao})
+        });
 
-class Candidatos extends Component {
+        etapasClient.getOne(this.state.etapa, etapa => {
+            this.setState({etapaDescricao: etapa[0].descricao})
+        });
+    }
+
     render() {
+
+        let columns = [{
+            Header: 'Candidato',
+            accessor: 'candidato_nome',
+            width: getColumnWidth(this.state.data, 'candidato_nome', 'Cargo')
+        }, {
+            Header: 'Cargo',
+            accessor: 'cargo_nome',
+            width: getColumnWidth(this.state.data, 'cargo_nome', 'Cargo')
+        }, {
+            Header: 'Nota',
+            accessor: 'nota',
+            width: 60
+        }, {
+            Header: 'Ações',
+            accessor: 'id',
+            filterable: false,
+            minWidth: 200,
+            Cell: ({value}) => (<div>
+
+            </div>)
+        }];
+        console.log('render: ', this.state);
         return (
             <div className="container bg-white">
-                <h3 className="border-bottom border-gray pb-2 mb-0">Candidatos da etapa X do concurso Y</h3>
+                <h3 className="border-bottom border-gray pb-2 mb-0">Candidatos da
+                    etapa {this.state.concursoDescricao} do
+                    concurso {this.state.etapaDescricao}</h3>
                 <div className="row margin15">
                     <ReactTable
-                        data={data}
+                        data={this.state.data}
                         columns={columns}
                         showPagination={false}
+                        loading={this.state.loading}
                         minRows={0}
                         filterable
                     />
@@ -65,4 +80,5 @@ class Candidatos extends Component {
     }
 }
 
-export default Candidatos;
+
+export default CandidatosEtapa;
