@@ -66,8 +66,8 @@ class Concursos extends Component {
             width: getColumnWidth(this.state.data, 'descricao', 'Descrição')
         }, {
             Header: 'Etapa atual',
-            accessor: 'etapa',
-            width: getColumnWidth(this.state.data, 'etapa', 'Etapa atual')
+            accessor: 'etapa_descricao',
+            width: getColumnWidth(this.state.data, 'etapa_descricao', 'Etapa atual')
         }, {
             Header: 'Ações',
             accessor: 'id',

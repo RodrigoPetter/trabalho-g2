@@ -87,4 +87,15 @@ class Repository
         }
         return true;
     }
+
+    public function generic($query, $id)
+    {
+        $query = $this->conn->prepare($query);
+        if (!$query->execute(array($id))) {
+            http_response_code(500);
+            var_dump($query->errorInfo());
+            die;
+        }
+        return $query;
+    }
 }

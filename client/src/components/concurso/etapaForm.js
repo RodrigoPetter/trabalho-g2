@@ -77,6 +77,7 @@ class EtapaForm extends Component {
                                 onChange={this.handleChange}
                                 required={true}>
                             <option></option>
+                            <option key={3} value={3}>{'Inscrições'}</option>
                             <option key={1} value={1}>{'Classificatória'}</option>
                             <option key={2} value={2}>{'Eliminatória'}</option>
                         </select>

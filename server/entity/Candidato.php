@@ -2,12 +2,12 @@
 
 class Candidato
 {
-    private $id;
-    private $nome;
-    private $endereco;
-    private $telefone;
-    private $cep;
-    private $bairro;
+    public $id;
+    public $nome;
+    public $endereco;
+    public $telefone;
+    public $cep;
+    public $bairro;
 
     /**
      * @return mixed

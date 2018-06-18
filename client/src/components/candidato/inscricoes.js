@@ -1,81 +1,79 @@
 import React, {Component} from "react";
 import ReactTable from "react-table";
 import {getColumnWidth} from "../reacttable/tableUtils";
-import candidatoClient from "../../client/candidatoClient";
+import inscricaoClient from "../../client/inscricaoClient";
+import ConcursoClient from "../../client/concursoClient";
+import CargoClient from "../../client/cargoClient";
 
-let formURL = "/candidato/";
+let formURL = "inscricao/";
 
 class Candidatos extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
+            id: props.match.params.id || '',
             data: [],
             loading: true
         };
     }
 
     componentDidMount() {
-        candidatoClient.getAll(json => {
+        inscricaoClient.getAll(json => {
             this.setState({data: json});
         }).finally(() => {
             this.setState({loading: false})
         });
+
+        CargoClient.getAll(data => {
+            this.setState({cargoData: data});
+        });
+        ConcursoClient.getAll(data => {
+            this.setState({concursoData: data});
+        })
     }
 
     delete(event, value) {
         event.preventDefault();
-        candidatoClient.delete(value, (response) => {
+        inscricaoClient.delete(value, (response) => {
             this.componentDidMount();
         });
     }
 
     editar(event, value) {
         event.preventDefault();
-        this.props.history.push('candidato/' + value + '/');
-    }
-
-    inscricoes(event, value) {
-        event.preventDefault();
-        this.props.history.push('candidato/' + value + '/inscricoes');
+        this.props.history.push('inscricao/' + value + '/');
     }
 
     render() {
-        console.log('render: ', this.state.data);
+        console.log('render: ', this.state);
         const columns = [{
-            Header: 'ID',
-            accessor: 'id'
+            Header: 'Concurso',
+            id: 'concurso_cargo_concurso_id',
+            accessor: (d) => {
+                if (this.state.concursoData) {
+                    let a = this.state.concursoData.find(c => c.id === d.concurso_cargo_concurso_id);
+                    return a.descricao;
+                }
+                return "UNDEFINED";
+            },
+            width: 350
         }, {
-            Header: 'Nome',
-            accessor: 'nome',
-            width: getColumnWidth(this.state.data, 'nome', 'Nome')
-        }, {
-            Header: 'Telefone',
-            accessor: 'telefone',
-            width: getColumnWidth(this.state.data, 'telefone', 'Telefone')
-        },{
-            Header: 'Endereço',
-            accessor: 'endereco',
-            width: getColumnWidth(this.state.data, 'endereco', 'Endereco')
-        }, {
-            Header: 'Bairro',
-            accessor: 'bairro',
-            width: getColumnWidth(this.state.data, 'bairro', 'Bairro')
-        }, {
-            Header: 'CEP',
-            accessor: 'cep',
-            width: getColumnWidth(this.state.data, 'cep', 'CEP')
+            Header: 'Cargo',
+            id: 'concurso_cargo_cargo_id',
+            accessor: (d) => {
+                if (this.state.cargoData) {
+                    let a = this.state.cargoData.find(c => c.id === d.concurso_cargo_cargo_id);
+                    return a.nome;
+                }
+                return "UNDEFINED";
+            },
+            width: 350
         }, {
             Header: 'Ações',
             accessor: 'id',
             filterable: false,
-            minWidth: 190,
+            minWidth: 80,
             Cell: ({value}) => (<div>
-                <a href="#" onClick={(event) => {
-                    this.inscricoes(event, value)
-                }} className="badge badge-primary ml-2">Inscricoes</a>
-                <a href="#" onClick={(event) => {
-                    this.editar(event, value)
-                }} className="badge badge-secondary ml-2">Editar</a>
                 <a href="#" onClick={(event) => {
                     this.delete(event, value)
                 }} className="badge badge-secondary ml-2">Excluir</a>
@@ -84,13 +82,13 @@ class Candidatos extends Component {
 
         return (
             <div className="container bg-white">
-                <h3 className="border-bottom border-gray pb-2 mb-0">Candidatos registrados</h3>
+                <h3 className="border-bottom border-gray pb-2 mb-0">Concursos inscritos</h3>
                 <div className="row margin15">
                     <div className="col">
                         <button type="button" className="btn btn-primary btn-sm"
                                 onClick={function () {
                                     document.location.href = formURL
-                                }}>Novo candidato
+                                }}>Nova inscrição
                         </button>
                     </div>
                 </div>

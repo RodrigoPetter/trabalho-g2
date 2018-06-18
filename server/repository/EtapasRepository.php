@@ -29,4 +29,11 @@ class EtapasRepository extends Repository
         return parent::insert($fields, $values);
     }
 
+    public function findEtapaAtiva($concurso_id)
+    {
+        $query = 'select * from etapa where concurso_id = '.$concurso_id.' ORDER BY id DESC';
+
+        return parent::generic($query, $concurso_id)->fetchAll(PDO::FETCH_CLASS, Etapa::class);
+    }
+
 }

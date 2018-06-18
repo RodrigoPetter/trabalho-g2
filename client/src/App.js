@@ -7,12 +7,15 @@ import Cargos from "./components/cargo/cargos";
 import CargoForm from "./components/cargo/cargoForm";
 import Dashboard from "./components/dashboard/dashboard";
 import Candidatos from "./components/candidato/candidatos";
+import CandidatoForm from "./components/candidato/candidatoForm";
+import Inscricoes from "./components/candidato/inscricoes";
+import InscricaoForm from "./components/candidato/InscricaoForm";
 import Departamentos from "./components/departamento/departamentos";
 import DepartamentoForm from "./components/departamento/departamentoForm";
 import DepartamentoCargos from "./components/departamento/departamentoCargos";
 import DepartamentoCargoForm from "./components/departamento/departamentoCargoForm";
 import Etapas from "./components/concurso/etapas";
-import CandidatosEtapa from "./components/concurso/candidatos_etapa";
+import CandidatosEtapa from "./components/concurso/candidatosEtapa";
 import EtapaForm from "./components/concurso/etapaForm";
 import Vagas from "./components/concurso/vagas";
 import VagaForm from "./components/concurso/vagaForm";
@@ -37,12 +40,12 @@ class App extends Component {
                         <Route exact path="/" component={Dashboard}/>
                         <Route path="/concursos" component={Concursos}/>
                         <Route path="/concurso/:id/etapas" component={Etapas}/>
+                        <Route path="/concurso/:id/etapa/:etapa_id/candidatos" component={CandidatosEtapa}/>
                         <Route path="/concurso/:id/etapa/:etapa_id" component={EtapaForm}/>
                         <Route path="/concurso/:id/etapa" component={EtapaForm}/>
                         <Route path="/concurso/:id/vagas" component={Vagas}/>
                         <Route path="/concurso/:id/vaga/:cargo_id" component={VagaForm}/>
                         <Route path="/concurso/:id/vaga" component={VagaForm}/>
-                        <Route path="/candidatos-etapa" component={CandidatosEtapa}/>
                         <Route path="/concurso/:id/" component={ConcursoForm}/>
                         <Route path="/concurso" component={ConcursoForm}/>
 
@@ -55,7 +58,12 @@ class App extends Component {
                         <Route path="/cargos" component={Cargos}/>
                         <Route path="/cargo/:id/" component={CargoForm}/>
                         <Route path="/cargo" component={CargoForm}/>
+
                         <Route path="/candidatos" component={Candidatos}/>
+                        <Route path="/candidato/:id/inscricoes" component={Inscricoes}/>
+                        <Route path="/candidato/:id/inscricao" component={InscricaoForm}/>
+                        <Route path="/candidato/:id" component={CandidatoForm}/>
+                        <Route path="/candidato/" component={CandidatoForm}/>
                     </Switch>
                 </div>
             </Router>

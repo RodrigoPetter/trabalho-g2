@@ -6,6 +6,8 @@ class Concurso
     public $descricao;
     public $data;
     public $local;
+    public $etapa;
+    public $etapa_descricao;
 
     public function getId()
     {

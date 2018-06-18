@@ -44,6 +44,11 @@ class Etapas extends Component {
         this.props.history.push('/concurso/' + this.state.concurso + '/etapa/' + value);
     }
 
+    candidatos(event, value) {
+        event.preventDefault();
+        this.props.history.push('/concurso/' + this.state.concurso + '/etapa/' + value + '/candidatos');
+    }
+
     render() {
 
         let columns = [{
@@ -57,7 +62,7 @@ class Etapas extends Component {
             Header: 'Tipo',
             id: 'tipo',
             accessor: d => {
-                return (d.tipo === "1" ? "Classificatória" : "Eliminatória")
+                return (d.tipo === "1" ? "Classificatória" : d.tipo === "2" ? "Eliminatória" : "Inscrições")
             },
             width: 190
         }, {
@@ -66,6 +71,9 @@ class Etapas extends Component {
             filterable: false,
             minWidth: 150,
             Cell: ({value}) => (<div>
+                <a href="#" onClick={(event) => {
+                    this.candidatos(event, value)
+                }} className="badge badge-secondary ml-2">Candidatos</a>
                 <a href="#" onClick={(event) => {
                     this.editar(event, value)
                 }} className="badge badge-secondary ml-2">Editar</a>
