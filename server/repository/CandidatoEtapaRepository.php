@@ -28,4 +28,19 @@ class CandidatoEtapaRepository
         return $query->fetchAll(PDO::FETCH_CLASS, EtapaCandidato::class);
     }
 
+    public function insert($data)
+    {
+        $data_fields = array_keys($data);
+        $data = array_values($data);
+
+        $query = $this->conn->prepare("INSERT INTO {$this->table} (" . implode(', ', $data_fields) . ") VALUES (" . implode(', ', $data) . ")");
+
+        if (!$query->execute($data)) {
+            http_response_code(500);
+            var_dump($query->errorInfo());
+            die;
+        }
+        return true;
+    }
+
 }

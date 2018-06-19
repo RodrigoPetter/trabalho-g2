@@ -17,7 +17,7 @@ class ConcursoRepository extends Repository
     public function findAll()
     {
         $query = parent::findAll();
-        $concursos =  $query->fetchAll(PDO::FETCH_CLASS, Concurso::class);
+        $concursos = $query->fetchAll(PDO::FETCH_CLASS, Concurso::class);
 
         return $this->alimentarEtapa($concursos);
     }
@@ -25,7 +25,7 @@ class ConcursoRepository extends Repository
     public function findOne($get)
     {
         $query = parent::findOne($get);
-        $concursos =  $query->fetchAll(PDO::FETCH_CLASS, Concurso::class);
+        $concursos = $query->fetchAll(PDO::FETCH_CLASS, Concurso::class);
 
         return $this->alimentarEtapa($concursos);
     }
@@ -34,17 +34,30 @@ class ConcursoRepository extends Repository
     {
         $fields = array('id', 'descricao', 'data', 'local');
         $values = array(null, $data['descricao'], $data['data'], $data['local']);
-        return parent::insert($fields, $values);
+        $concurso = parent::insert($fields, $values);
+
+        if($concurso) {
+            $etapa = array();
+            $etapa['concurso_id'] = parent::generic('SELECT MAX(id) FROM concurso where 1 = ?', 1)->fetchColumn();
+            $etapa['descricao'] = "Inscrições";
+            $etapa['tipo'] = "3";
+            $this->EtapasRepository->_insert($etapa);
+        }
+
+        return $concurso;
     }
 
+    private function alimentarEtapa($concursos)
+    {
+        foreach ($concursos as $concurso) {
 
-    private function alimentarEtapa($concursos){
-        foreach ($concursos as $concurso){
+            $etapa = $this->EtapasRepository->findEtapaAtiva($concurso->id);
 
-            $etapa = $this->EtapasRepository->findEtapaAtiva($concurso->id)[0];
+            if($etapa){
+                $concurso->etapa = $etapa[0]->id;
+                $concurso->etapa_descricao = $etapa[0]->descricao;
+            }
 
-            $concurso->etapa = $etapa->id;
-            $concurso->etapa_descricao = $etapa->descricao;
         }
         return $concursos;
     }
