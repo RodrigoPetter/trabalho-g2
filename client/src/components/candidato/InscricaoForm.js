@@ -27,6 +27,13 @@ class InscricaoForm extends Component {
     componentDidMount() {
         CargoClient.getAll(data => {
             this.setState({cargoData: data});
+
+            InscricaoClient.getOne(this.state.formInputs.candidato_id, inscricoe => {
+                inscricoe.forEach(inscricao => {
+                    let naoInscritos = this.state.concursoData.filter(e => e.id !== inscricao.concurso_cargo_concurso_id);
+                    this.setState({concursoData: naoInscritos});
+                });
+            })
         });
 
         ConcursoClient.getAll(data => {

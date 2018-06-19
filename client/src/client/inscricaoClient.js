@@ -24,7 +24,7 @@ class inscricaoClient {
     }
 
     static getOne(id, callback) {
-        return fetch(url + (!id ? '' : '?id=' + id))
+        return fetch(url + (!id ? '' : '?candidato_id=' + id))
             .then(response => {
                 let temp = response.clone();
                 response.json().then(callback).catch(error => {

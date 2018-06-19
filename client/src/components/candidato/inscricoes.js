@@ -18,7 +18,7 @@ class Candidatos extends Component {
     }
 
     componentDidMount() {
-        inscricaoClient.getAll(json => {
+        inscricaoClient.getOne(this.state.id, json => {
             this.setState({data: json});
         }).finally(() => {
             this.setState({loading: false})
