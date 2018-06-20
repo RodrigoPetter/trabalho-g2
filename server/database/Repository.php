@@ -48,6 +48,7 @@ class Repository
         $query = $this->conn->prepare("INSERT INTO {$this->table} (" . implode(', ', $fields) . ") VALUES (" . implode(" ,", $temp) . ")");
         if (!$query->execute($values)) {
             http_response_code(500);
+            var_dump($query->queryString);
             var_dump($query->errorInfo());
             die;
         }

@@ -36,6 +36,11 @@ class CandidatosEtapa extends Component {
         });
     }
 
+    aprovar(event) {
+        event.preventDefault();
+        this.props.history.push('aprovar/');
+    }
+
     render() {
 
         let columns = [{
@@ -50,14 +55,6 @@ class CandidatosEtapa extends Component {
             Header: 'Nota',
             accessor: 'nota',
             width: 60
-        }, {
-            Header: 'Ações',
-            accessor: 'id',
-            filterable: false,
-            minWidth: 200,
-            Cell: ({value}) => (<div>
-
-            </div>)
         }];
         console.log('render: ', this.state);
         return (
@@ -65,6 +62,14 @@ class CandidatosEtapa extends Component {
                 <h3 className="border-bottom border-gray pb-2 mb-0">Candidatos da
                     etapa {this.state.concursoDescricao} do
                     concurso {this.state.etapaDescricao}</h3>
+                <div className="row margin15">
+                    <div className="col">
+                        <button type="button" className="btn btn-primary btn-sm"
+                                onClick={(event) => {
+                                    this.aprovar(event)}}>Aprovar candidatos
+                        </button>
+                    </div>
+                </div>
                 <div className="row margin15">
                     <ReactTable
                         data={this.state.data}

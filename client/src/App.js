@@ -19,6 +19,7 @@ import CandidatosEtapa from "./components/concurso/candidatosEtapa";
 import EtapaForm from "./components/concurso/etapaForm";
 import Vagas from "./components/concurso/vagas";
 import VagaForm from "./components/concurso/vagaForm";
+import aprovarCandidatos from "./components/concurso/aprovarCandidatos";
 
 class App extends Component {
     render() {
@@ -41,6 +42,7 @@ class App extends Component {
                         <Route path="/concursos" component={Concursos}/>
                         <Route path="/concurso/:id/etapas" component={Etapas}/>
                         <Route path="/concurso/:id/etapa/:etapa_id/candidatos" component={CandidatosEtapa}/>
+                        <Route path="/concurso/:id/etapa/:etapa_id/aprovar" component={aprovarCandidatos}/>
                         <Route path="/concurso/:id/etapa/:etapa_id" component={EtapaForm}/>
                         <Route path="/concurso/:id/etapa" component={EtapaForm}/>
                         <Route path="/concurso/:id/vagas" component={Vagas}/>

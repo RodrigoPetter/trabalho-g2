@@ -1,6 +1,7 @@
 import configuration from "../configuration";
 
 let url = configuration.baseURL + 'EtapasAPI.php';
+let urlAprovar = configuration.baseURL + 'AprovarAPI.php';
 
 class etapasClient {
 
@@ -58,6 +59,24 @@ class etapasClient {
     static delete(concurso_id, etapa_id, callback) {
         return fetch(url + '?concurso_id=' + concurso_id + '&id=' + etapa_id, {
             method: 'DELETE'
+        }).then(response => {
+            if (!response.ok) {
+                response.text().then(txt =>{
+                    alert("Erro: "+txt)
+                })
+            } else {
+                callback(response)
+            }
+        });
+    }
+
+    static aprovar(concurso_id, etapa_id, nota, callback) {
+        return fetch(urlAprovar + '?concurso_id=' + concurso_id + '&etapa_id=' + etapa_id, {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            method: 'POST',
+            body: encodeURIComponent('nota') + "=" + encodeURIComponent(nota)
         }).then(response => {
             if (!response.ok) {
                 response.text().then(txt =>{
