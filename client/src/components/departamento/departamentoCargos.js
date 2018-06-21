@@ -27,7 +27,7 @@ class DepartamentoCargos extends Component {
             });
 
         departamentoClient.getOne(this.state.departamento, departamento =>{
-            this.state.departamentoNome = departamento[0].nome;
+            this.setState({departamentoNome: departamento[0].nome});
         })
     }
 

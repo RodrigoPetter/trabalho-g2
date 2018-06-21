@@ -23,6 +23,24 @@ class candidatoEtapaClient {
                 alert("Error: " + error);
             })
     }
+
+    static update(data, callback) {
+        return fetch(url+'?id=0', {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            method: 'POST',
+            body: data.join("&")
+        }).then(response => {
+            if (!response.ok) {
+                response.text().then(txt =>{
+                    alert("Erro: "+txt)
+                })
+            } else {
+                callback(response)
+            }
+        });
+    }
 }
 
 export default candidatoEtapaClient;

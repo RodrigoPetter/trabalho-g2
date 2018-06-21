@@ -30,10 +30,12 @@ class CandidatoEtapaAPI extends API
         throw new Exception("Método não implementado");
     }
 
-    function update($get, $data)
+    function update($get, $post)
     {
-        http_response_code(500);
-        throw new Exception("Método não implementado");
+        var_dump($post);
+        $nota = $post['nota'];
+        unset($post['nota']);
+        return $this->repository->update($nota, $post);
     }
 
     function delete($get)

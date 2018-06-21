@@ -43,4 +43,23 @@ class CandidatoEtapaRepository
         return true;
     }
 
+    public function update($nota, $filtros)
+    {
+        $filtro_fields = array_keys($filtros);
+        $filtro = array_values($filtros);
+
+        array_unshift($filtro, $nota);
+
+        $query = $this->conn->prepare("UPDATE {$this->table} SET nota = ? WHERE ".implode(' = ? AND ', $filtro_fields)." = ?");
+
+        var_dump($filtro);
+
+        if (!$query->execute($filtro)) {
+            http_response_code(500);
+            var_dump($query->errorInfo());
+            die;
+        }
+        return true;
+    }
+
 }
