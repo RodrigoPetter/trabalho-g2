@@ -23,6 +23,20 @@ switch ($_GET['target']) {
         echo json_encode($query->fetchAll(PDO::FETCH_ASSOC));
         break;
 
+    case 'ETAPAS':
+
+        $concursos = $conn->query("SELECT c.id, c.descricao FROM concurso c")->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach ($concursos as $key => $item) {
+            $concursos[$key]['etapas'] =  $conn->query("SELECT e.id, e.descricao,  COUNT(1) as count 
+                                                      FROM etapa e
+                                                      INNER JOIN etapa_candidato ec ON(e.id = ec.etapa_id)
+                                                      WHERE e.concurso_id = " . $item['id'] . "
+                                                      GROUP BY e.id")->fetchAll(PDO::FETCH_ASSOC);
+        }
+        echo json_encode($concursos);
+        break;
+
     default:
         http_response_code(500);
         throw new Exception("Método não implementado");

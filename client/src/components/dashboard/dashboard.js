@@ -8,6 +8,7 @@ class Dashboard extends Component {
         super(props);
         this.state = {
             concursos: [],
+            etapas: [],
             max_inscritos: 100
         };
     }
@@ -16,7 +17,13 @@ class Dashboard extends Component {
         fetch(url + "?target=CONCURSOS").then((response) => {
             response.json().then(json => {
                 this.setState({concursos: json});
-                this.setState({max_inscritos: Math.max(...json.map(o => o.count))});
+                this.setState({max_inscritos: Math.max(...json.map(o => o.count))+3});
+            });
+        });
+
+        fetch(url + "?target=ETAPAS").then((response) => {
+            response.json().then(json => {
+                this.setState({etapas: json});
             });
         })
     }
@@ -37,7 +44,7 @@ class Dashboard extends Component {
                                             <div className="progress">
                                                 <div className="progress-bar bg-success"
                                                      role="progressbar"
-                                                     style={{width: ((100*c.count)/this.state.max_inscritos)+"%"}}
+                                                     style={{width: ((100 * c.count) / this.state.max_inscritos) + "%"}}
                                                      aria-valuenow={c.count}
                                                      aria-valuemin="0"
                                                      aria-valuemax={this.state.max_inscritos}>{c.count}
@@ -54,23 +61,35 @@ class Dashboard extends Component {
                             <div className="card-body">
                                 <h5 className="card-title">Candidatos por etapa</h5>
                                 <div className="card">
-                                    <div className="card-body">
-                                        <h6>Concurso 1</h6>
-                                        <label>Etapa 1</label>
-                                        <div className="progress">
-                                            <div className="progress-bar bg-success" role="progressbar"
-                                                 style={{width: "40%"}}
-                                                 aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">40
+
+                                    {this.state.etapas.map(c => {
+                                        console.log('etapa: ', c);
+                                        return (
+                                            <div className="card-body">
+                                                <h6>{c.descricao}</h6>
+                                                {c.etapas.map(e => {
+
+                                                    return (
+                                                        <div>
+                                                            <label>{e.descricao}</label>
+                                                            <div className="progress">
+                                                                <div className="progress-bar bg-success"
+                                                                     role="progressbar"
+                                                                     style={{width: ((100 * e.count) / this.state.max_inscritos) + "%"}}
+                                                                     aria-valuenow={e.count}
+                                                                     aria-valuemin="0"
+                                                                     aria-valuemax={this.state.max_inscritos}>{e.count}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    )
+                                                })
+
+                                                }
                                             </div>
-                                        </div>
-                                        <label>Etapa 2</label>
-                                        <div className="progress">
-                                            <div className="progress-bar bg-success" role="progressbar"
-                                                 style={{width: "40%"}}
-                                                 aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">40
-                                            </div>
-                                        </div>
-                                    </div>
+                                        )
+                                    })}
+
                                 </div>
                             </div>
                         </div>

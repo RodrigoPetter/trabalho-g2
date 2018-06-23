@@ -22,9 +22,15 @@ class DepartamentoCargoForm extends Component {
             this.setState({departamentoData: json[0]});
         });
 
-        cargoClient.getAll(data => {
-            this.setState({cargoData: data});
-        })
+        departamentoCargoClient.getAll(this.state.formInputs.departamento_id, depCargos => {
+            cargoClient.getAll(data => {
+                this.setState({cargoData: data.filter((cargo) => {
+                        return !depCargos.some(depcargo =>{
+                            return depcargo.cargo_id === cargo.id;
+                        });
+                    })});
+            });
+        });
     }
 
     handleChange(el) {
