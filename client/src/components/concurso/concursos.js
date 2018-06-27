@@ -53,7 +53,7 @@ class Concursos extends Component {
         }, {
             Header: 'Descrição',
             accessor: 'descricao',
-            width: getColumnWidth(this.state.data, 'descricao', 'Descrição')
+            width: getColumnWidth(this.state.data, 'descricao', 'Descrição'),
         }, {
             Header: 'Data',
             id: 'data',
@@ -63,11 +63,11 @@ class Concursos extends Component {
         }, {
             Header: 'Local',
             accessor: 'local',
-            width: getColumnWidth(this.state.data, 'descricao', 'Descrição')
+            width: 190
         }, {
             Header: 'Etapa atual',
             accessor: 'etapa_descricao',
-            width: getColumnWidth(this.state.data, 'etapa_descricao', 'Etapa atual')
+            width: 110
         }, {
             Header: 'Ações',
             accessor: 'id',

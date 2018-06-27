@@ -11,12 +11,16 @@ class departamentoCargoClient {
                 let temp = response.clone();
                 response.json()
                     .then(depCargos => {
-                        depCargos.forEach(item => {
-                            cargoClient.getOne(item.cargo_id, cargo => {
-                                item.cargo = cargo[0];
-                                callback(depCargos)
-                            })
-                        });
+                        if (!!depCargos) {
+                            depCargos.forEach(item => {
+                                cargoClient.getOne(item.cargo_id, cargo => {
+                                    item.cargo = cargo[0];
+                                    callback(depCargos)
+                                })
+                            });
+                        } else {
+                            callback(false)
+                        }
                     })
                     .catch(error => {
                         alert("Erro no parse da mensagem: " + error);
@@ -68,8 +72,8 @@ class departamentoCargoClient {
             method: 'DELETE'
         }).then(response => {
             if (!response.ok) {
-                response.text().then(txt =>{
-                    alert("Erro: "+txt)
+                response.text().then(txt => {
+                    alert("Erro: " + txt)
                 })
             } else {
                 callback(response)

@@ -38,6 +38,18 @@ class VagaForm extends Component {
 
         cargoClient.getAll(data => {
             this.setState({cargoData: data});
+
+            vagasClient.getAll(this.state.formInputs.concurso_id, vagas => {
+                this.setState(() => {
+                    return {
+                        cargoData: this.state.cargoData.filter(item => {
+                            return !vagas.some(vaga => {
+                                return vaga.cargo_id === item.id
+                            });
+                        })
+                    }
+                });
+            })
         })
     }
 
@@ -52,14 +64,14 @@ class VagaForm extends Component {
     salvar(event) {
         event.preventDefault();
         let data = new FormData(event.target);
-        let callback = ()=> {
+        let callback = () => {
             this.props.history.goBack();
         };
-        if(this.state.isInsert){
+        if (this.state.isInsert) {
             data.append('concurso_id', this.state.formInputs.concurso_id);
             vagasClient.salvar(undefined, undefined, data, callback);
-        }else{
-            vagasClient.salvar(this.state.formInputs.concurso_id, this.state.formInputs.cargo_id , data, callback);
+        } else {
+            vagasClient.salvar(this.state.formInputs.concurso_id, this.state.formInputs.cargo_id, data, callback);
         }
 
     }
