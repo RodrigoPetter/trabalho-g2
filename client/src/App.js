@@ -39,6 +39,7 @@ class App extends Component {
                     </nav>
                     <Switch>
                         <Route exact path="/" component={Dashboard}/>
+                        <Route exact path="/trabalho-g2/build/" component={Dashboard}/>
                         <Route path="/concursos" component={Concursos}/>
                         <Route path="/concurso/:id/etapas" component={Etapas}/>
                         <Route path="/concurso/:id/etapa/:etapa_id/candidatos" component={CandidatosEtapa}/>
