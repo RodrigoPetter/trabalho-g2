@@ -1,5 +1,6 @@
 import configuration from "../configuration";
 import cargoClient from "./cargoClient";
+import notify from "./notify";
 
 let url = configuration.baseURL + 'DepartamentoCargoAPI.php';
 
@@ -23,15 +24,15 @@ class departamentoCargoClient {
                         }
                     })
                     .catch(error => {
-                        alert("Erro no parse da mensagem: " + error);
+                        notify.erro("Erro no parse da mensagem: " + error);
                         temp.text()
                             .then(text => {
-                                alert("Mensagem original: " + text);
+                                notify.erro("Mensagem original: " + text);
                             });
                     })
             })
             .catch(error => {
-                alert("Error: " + error);
+                notify.erro(error);
             })
     }
 
@@ -40,9 +41,9 @@ class departamentoCargoClient {
             .then(response => {
                 let temp = response.clone();
                 response.json().then(callback).catch(error => {
-                    alert("Erro no parse da mensagem: " + error);
+                    notify.erro("Erro no parse da mensagem: " + error);
                     temp.text().then(text => {
-                        alert("Mensagem original: " + text);
+                        notify.erro("Mensagem original: " + text);
                     });
                 })
             });
@@ -58,10 +59,10 @@ class departamentoCargoClient {
                 response.json()
                     .then(callback)
                     .catch(error => {
-                        alert("Erro no parse da mensagem: " + error);
+                        notify.erro("Erro no parse da mensagem: " + error);
                         temp.text()
                             .then(text => {
-                                alert("Mensagem original: " + text);
+                                notify.erro("Mensagem original: " + text);
                             });
                     })
             })
@@ -73,7 +74,7 @@ class departamentoCargoClient {
         }).then(response => {
             if (!response.ok) {
                 response.text().then(txt => {
-                    alert("Erro: " + txt)
+                    notify.erro(txt)
                 })
             } else {
                 callback(response)

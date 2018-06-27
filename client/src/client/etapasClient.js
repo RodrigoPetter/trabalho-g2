@@ -1,4 +1,5 @@
 import configuration from "../configuration";
+import notify from "./notify";
 
 let url = configuration.baseURL + 'EtapasAPI.php';
 let urlAprovar = configuration.baseURL + 'AprovarAPI.php';
@@ -12,15 +13,15 @@ class etapasClient {
                 response.json()
                     .then(callback)
                     .catch(error => {
-                        alert("Erro no parse da mensagem: " + error);
+                        notify.erro("Erro no parse da mensagem: " + error);
                         temp.text()
                             .then(text => {
-                                alert("Mensagem original: " + text);
+                                notify.erro("Mensagem original: " + text);
                             });
                     })
             })
             .catch(error => {
-                alert("Error: " + error);
+                notify.erro(error);
             })
     }
 
@@ -29,9 +30,9 @@ class etapasClient {
             .then(response => {
                 let temp = response.clone();
                 response.json().then(callback).catch(error => {
-                    alert("Erro no parse da mensagem: " + error);
+                    notify.erro("Erro no parse da mensagem: " + error);
                     temp.text().then(text => {
-                        alert("Mensagem original: " + text);
+                        notify.erro("Mensagem original: " + text);
                     });
                 })
             });
@@ -47,10 +48,10 @@ class etapasClient {
                 response.json()
                     .then(callback)
                     .catch(error => {
-                        alert("Erro no parse da mensagem: " + error);
+                        notify.erro("Erro no parse da mensagem: " + error);
                         temp.text()
                             .then(text => {
-                                alert("Mensagem original: " + text);
+                                notify.erro("Mensagem original: " + text);
                             });
                     })
             })
@@ -62,7 +63,7 @@ class etapasClient {
         }).then(response => {
             if (!response.ok) {
                 response.text().then(txt =>{
-                    alert("Erro: "+txt)
+                    notify.erro(txt)
                 })
             } else {
                 callback(response)
@@ -80,7 +81,7 @@ class etapasClient {
         }).then(response => {
             if (!response.ok) {
                 response.text().then(txt =>{
-                    alert("Erro: "+txt)
+                    notify.erro(txt)
                 })
             } else {
                 callback(response)
