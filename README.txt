@@ -1,0 +1,1 @@
+Para a aplicação funcionar, a pasta raiz deve estar acessível atráves da URL: http://localhost/trabalho-g2/

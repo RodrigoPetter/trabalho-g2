@@ -39,7 +39,10 @@ class Concursos extends Component {
         event.preventDefault();
         this.props.history.push('concurso/' + value + '/etapas');
     }
-
+    novo(event) {
+        event.preventDefault();
+        this.props.history.push(formURL);
+    }
     vagas(event, value) {
         event.preventDefault();
         this.props.history.push('concurso/' + value + '/vagas');
@@ -95,9 +98,7 @@ class Concursos extends Component {
                 <div className="row margin15">
                     <div className="col">
                         <button type="button" className="btn btn-primary btn-sm"
-                                onClick={function () {
-                                    document.location.href = formURL
-                                }}>Novo concurso
+                                onClick={(event)=>{this.novo(event)}}>Novo concurso
                         </button>
                     </div>
                 </div>

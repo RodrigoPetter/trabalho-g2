@@ -45,7 +45,10 @@ class Vagas extends Component {
             this.componentDidMount();
         });
     }
-
+    novo(event) {
+        event.preventDefault();
+        this.props.history.push(formURL);
+    }
     editar(event, value) {
         event.preventDefault();
         this.props.history.push('/concurso/' + this.state.concurso + '/vaga/' + value);
@@ -83,9 +86,7 @@ class Vagas extends Component {
                 <div className="row margin15">
                     <div className="col">
                         <button type="button" className="btn btn-primary btn-sm"
-                                onClick={function () {
-                                    document.location.href = formURL
-                                }}>Adicionar vaga
+                                onClick={(event)=>{this.novo(event)}}>Adicionar vaga
                         </button>
                     </div>
                 </div>

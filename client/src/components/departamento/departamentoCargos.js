@@ -30,7 +30,10 @@ class DepartamentoCargos extends Component {
             this.setState({departamentoNome: departamento[0].nome});
         })
     }
-
+    novo(event) {
+        event.preventDefault();
+        this.props.history.push(formURL);
+    }
     delete(event, value) {
         event.preventDefault();
         departamentoCargoClient.delete(this.state.departamento, value, ()=>{
@@ -65,9 +68,7 @@ class DepartamentoCargos extends Component {
                 <div className="row margin15">
                     <div className="col">
                         <button type="button" className="btn btn-primary btn-sm"
-                                onClick={function () {
-                                    document.location.href = formURL
-                                }}>Adicionar cargo
+                                onClick={(event)=>{this.novo(event)}}>Adicionar cargo
                         </button>
                     </div>
                 </div>

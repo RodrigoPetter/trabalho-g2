@@ -28,7 +28,10 @@ class Candidatos extends Component {
             this.componentDidMount();
         });
     }
-
+    novo(event) {
+        event.preventDefault();
+        this.props.history.push(formURL);
+    }
     editar(event, value) {
         event.preventDefault();
         this.props.history.push('candidato/' + value + '/');
@@ -88,9 +91,7 @@ class Candidatos extends Component {
                 <div className="row margin15">
                     <div className="col">
                         <button type="button" className="btn btn-primary btn-sm"
-                                onClick={function () {
-                                    document.location.href = formURL
-                                }}>Novo candidato
+                                onClick={(event)=>{this.novo(event)}}>Novo candidato
                         </button>
                     </div>
                 </div>

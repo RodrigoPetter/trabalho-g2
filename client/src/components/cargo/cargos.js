@@ -31,7 +31,10 @@ class Cargos extends Component {
             this.componentDidMount();
         });
     }
-
+    novo(event) {
+        event.preventDefault();
+        this.props.history.push(formURL);
+    }
     editar(event, value) {
         event.preventDefault();
         this.props.history.push('cargo/' + value + '/');
@@ -66,9 +69,7 @@ class Cargos extends Component {
                 <div className="row margin15">
                     <div className="col">
                         <button type="button" className="btn btn-primary btn-sm"
-                                onClick={function () {
-                                    document.location.href = formURL
-                                }}>Novo cargo
+                                onClick={(event)=>{this.novo(event)}}>Novo cargo
                         </button>
                     </div>
                 </div>

@@ -38,7 +38,10 @@ class Etapas extends Component {
             this.componentDidMount();
         });
     }
-
+    novo(event) {
+        event.preventDefault();
+        this.props.history.push(formURL);
+    }
     editar(event, value) {
         event.preventDefault();
         this.props.history.push('/concurso/' + this.state.concurso + '/etapa/' + value);
@@ -90,9 +93,7 @@ class Etapas extends Component {
                 <div className="row margin15">
                     <div className="col">
                         <button type="button" className="btn btn-primary btn-sm"
-                                onClick={function () {
-                                    document.location.href = formURL
-                                }}>Adicionar etapa
+                                onClick={(event)=>{this.novo(event)}}>Adicionar etapa
                         </button>
                     </div>
                 </div>
